@@ -5,7 +5,7 @@ import ro.ucv.ace.neo4jworkshop.model.User;
 
 public interface UserRepository extends Neo4jRepository<User, Long> {
 
-	User findByUuid(Integer uuid);
+  User findByUuid(Integer uuid);
 
-	User findByName(String name);
+  User findByName(String name);
 }

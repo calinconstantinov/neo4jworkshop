@@ -5,6 +5,6 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 public interface HelperNeo4jRepository extends Neo4jRepository {
 
-	@Query("MATCH (n) DETACH DELETE n")
-	void deleteGraph();
+  @Query("MATCH (n) DETACH DELETE n")
+  void deleteGraph();
 }
