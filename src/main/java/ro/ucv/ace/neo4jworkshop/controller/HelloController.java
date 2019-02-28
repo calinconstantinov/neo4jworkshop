@@ -1,14 +1,17 @@
 package ro.ucv.ace.neo4jworkshop.controller;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.Company;
+import ro.ucv.ace.neo4jworkshop.model.Post;
 import ro.ucv.ace.neo4jworkshop.model.User;
 import ro.ucv.ace.neo4jworkshop.repository.CompanyRepository;
 import ro.ucv.ace.neo4jworkshop.repository.HelperNeo4jRepository;
+import ro.ucv.ace.neo4jworkshop.repository.PostRepository;
 import ro.ucv.ace.neo4jworkshop.repository.UserRepository;
 
 @RestController
@@ -23,6 +26,9 @@ public class HelloController {
 
   @Autowired
   private CompanyRepository companyRepository;
+
+  @Autowired
+  private PostRepository postRepository;
 
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
@@ -128,6 +134,65 @@ public class HelloController {
     endava.setUuid(1);
     endava.setName("Endava");
     companyRepository.save(endava);
+
+    Company iquest = new Company();
+    iquest.setUuid(2);
+    iquest.setName("IQuest");
+    companyRepository.save(iquest);
+
+    Company bigdataro = new Company();
+    bigdataro.setUuid(3);
+    bigdataro.setName("Bigdata.ro");
+    companyRepository.save(bigdataro);
+
+    Company ucv = new Company();
+    ucv.setUuid(4);
+    ucv.setName("Universitatea din Craiova");
+    companyRepository.save(ucv);
+
+    Company netrom = new Company();
+    netrom.setUuid(5);
+    netrom.setName("Netrom");
+    companyRepository.save(netrom);
+
+    Company db = new Company();
+    db.setUuid(6);
+    db.setName("Deutsche Bank");
+    companyRepository.save(db);
+
+    endava.setEmployees(Sets.newHashSet(calin, emilian, adelina, theodora, andra));
+    companyRepository.save(endava);
+
+    iquest.setEmployees(Sets.newHashSet(mihai, vladucu));
+    companyRepository.save(iquest);
+
+    bigdataro.setEmployees(Sets.newHashSet(valentina, felix));
+    companyRepository.save(bigdataro);
+
+    ucv.setEmployees(Sets.newHashSet(stefan));
+    companyRepository.save(ucv);
+
+    netrom.setEmployees(Sets.newHashSet(mihaela));
+    companyRepository.save(netrom);
+
+    db.setEmployees(Sets.newHashSet(razvan));
+    companyRepository.save(db);
+
+    Post calinPost1 = new Post();
+    calinPost1.setUuid(1);
+    calinPost1.setPoster(calin);
+    calinPost1.setContent("My first post ever!");
+    postRepository.save(calinPost1);
+
+    Post calinPost2 = new Post();
+    calinPost2.setUuid(2);
+    calinPost2.setPoster(calin);
+    calinPost2.setContent("I'm at the Neo4j Workshop!");
+    postRepository.save(calinPost2);
+    postRepository.findByPoster_Name("Calin");
+
+    mihai.likePost(calinPost1, calinPost2);
+    userRepository.save(mihai);
 
     return "Hello " + name + "!";
   }

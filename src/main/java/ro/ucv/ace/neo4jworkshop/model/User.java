@@ -30,8 +30,15 @@ public class User {
   @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
   private Set<User> friends = new LinkedHashSet<>();
 
+  @Relationship(type = "LIKES_POST", direction = Relationship.UNDIRECTED)
+  private Set<Post> likedPosts = new LinkedHashSet<>();
+
   public void addFriend(User... oneOrMoreFriends) {
     friends.addAll(Arrays.asList(oneOrMoreFriends));
     Arrays.stream(oneOrMoreFriends).forEach(u -> u.getFriends().add(this));
+  }
+
+  public void likePost(Post... oneOreMorePosts) {
+    likedPosts.addAll(Arrays.asList(oneOreMorePosts));
   }
 }

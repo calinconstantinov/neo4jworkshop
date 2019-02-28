@@ -8,14 +8,11 @@ import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Company {
+public class Post {
 
   @Setter(AccessLevel.NONE)
   private Long id;
@@ -24,8 +21,8 @@ public class Company {
   @Index(unique = true)
   private Integer uuid;
 
-  private String name;
+  private String content;
 
-  @Relationship(type = "EMPLOYED")
-  private Set<User> employees = new LinkedHashSet<>();
+  @Relationship(type = "POSTED_BY")
+  private User poster;
 }
