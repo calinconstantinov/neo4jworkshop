@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ro.ucv.ace.neo4jworkshop.model.Company;
 import ro.ucv.ace.neo4jworkshop.model.User;
+import ro.ucv.ace.neo4jworkshop.repository.CompanyRepository;
 import ro.ucv.ace.neo4jworkshop.repository.HelperNeo4jRepository;
 import ro.ucv.ace.neo4jworkshop.repository.UserRepository;
 
@@ -19,74 +21,113 @@ public class HelloController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private CompanyRepository companyRepository;
+
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
-
     helperNeo4jRepository.deleteGraph();
 
-    User user;
+    User calin = new User();
+    calin.setUuid(1);
+    calin.setName("Calin");
+    userRepository.save(calin);
 
-    user = new User();
-    user.setUuid(1);
-    user.setName("Calin");
-    userRepository.save(user);
+    User mihai = new User();
+    mihai.setUuid(2);
+    mihai.setName("Mihai");
+    userRepository.save(mihai);
 
-    user = new User();
-    user.setUuid(2);
-    user.setName("Mihai");
-    userRepository.save(user);
+    User emilian = new User();
+    emilian.setUuid(3);
+    emilian.setName("Emilian");
+    userRepository.save(emilian);
 
-    user = new User();
-    user.setUuid(3);
-    user.setName("Emilian");
-    userRepository.save(user);
+    User stefan = new User();
+    stefan.setUuid(4);
+    stefan.setName("Stefan");
+    userRepository.save(stefan);
 
-    user = new User();
-    user.setUuid(4);
-    user.setName("Stefan");
-    userRepository.save(user);
+    User vladucu = new User();
+    vladucu.setUuid(5);
+    vladucu.setName("Vladucu");
+    userRepository.save(vladucu);
 
-    user = new User();
-    user.setUuid(5);
-    user.setName("Vladucu");
-    userRepository.save(user);
+    User mihaela = new User();
+    mihaela.setUuid(6);
+    mihaela.setName("Mihaela");
+    userRepository.save(mihaela);
 
-    user = new User();
-    user.setUuid(6);
-    user.setName("Mihaela");
-    userRepository.save(user);
+    User valentina = new User();
+    valentina.setUuid(7);
+    valentina.setName("Valentina");
+    userRepository.save(valentina);
 
-    user = new User();
-    user.setUuid(7);
-    user.setName("Valentina");
-    userRepository.save(user);
+    User theodora = new User();
+    theodora.setUuid(8);
+    theodora.setName("Theodora");
+    userRepository.save(theodora);
 
-    user = new User();
-    user.setUuid(8);
-    user.setName("Theodora");
-    userRepository.save(user);
+    User andra = new User();
+    andra.setUuid(9);
+    andra.setName("Andra");
+    userRepository.save(andra);
 
-    user = new User();
-    user.setUuid(9);
-    user.setName("Andra");
-    userRepository.save(user);
+    User adelina = new User();
+    adelina.setUuid(10);
+    adelina.setName("Adelina");
+    userRepository.save(adelina);
 
-    user = new User();
-    user.setUuid(10);
-    user.setName("Adelina");
-    userRepository.save(user);
+    User felix = new User();
+    felix.setUuid(11);
+    felix.setName("Felix");
+    userRepository.save(felix);
 
-    user = new User();
-    user.setUuid(11);
-    user.setName("Felix");
-    userRepository.save(user);
+    User razvan = new User();
+    razvan.setUuid(12);
+    razvan.setName("Razvan");
+    userRepository.save(razvan);
 
-    user = new User();
-    user.setUuid(12);
-    user.setName("Razvan");
-    userRepository.save(user);
+    calin.addFriend(valentina, vladucu, mihaela, mihai, emilian, felix, andra, adelina, theodora, stefan, razvan);
+    userRepository.save(calin);
 
-    
+    valentina.addFriend(calin, felix, vladucu, emilian, razvan);
+    userRepository.save(valentina);
+
+    felix.addFriend(calin, valentina, vladucu, razvan);
+    userRepository.save(felix);
+
+    vladucu.addFriend(valentina, felix, mihai, emilian, stefan, mihaela, razvan, calin);
+    userRepository.save(vladucu);
+
+    mihai.addFriend(calin, vladucu, emilian, razvan, stefan);
+    userRepository.save(mihai);
+
+    mihaela.addFriend(stefan, calin, vladucu);
+    userRepository.save(mihaela);
+
+    theodora.addFriend(adelina, andra, calin);
+    userRepository.save(theodora);
+
+    andra.addFriend(theodora, adelina, calin);
+    userRepository.save(andra);
+
+    adelina.addFriend(theodora, andra, calin);
+    userRepository.save(adelina);
+
+    razvan.addFriend(calin, vladucu, mihai, valentina, felix, stefan, mihaela);
+    userRepository.save(razvan);
+
+    stefan.addFriend(calin, razvan, mihai, mihaela);
+    userRepository.save(stefan);
+
+    emilian.addFriend(valentina, mihai, vladucu, calin);
+    userRepository.save(emilian);
+
+    Company endava = new Company();
+    endava.setUuid(1);
+    endava.setName("Endava");
+    companyRepository.save(endava);
 
     return "Hello " + name + "!";
   }

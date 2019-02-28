@@ -8,7 +8,6 @@ import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class User {
+public class Company {
 
   @Setter(AccessLevel.NONE)
   private Long id;
@@ -27,11 +26,6 @@ public class User {
 
   private String name;
 
-  @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
-  private Set<User> friends = new LinkedHashSet<>();
-
-  public void addFriend(User... oneOrMoreFriends) {
-    friends.addAll(Arrays.asList(oneOrMoreFriends));
-    Arrays.stream(oneOrMoreFriends).forEach(u -> u.getFriends().add(this));
-  }
+  @Relationship(type = "EMPLOYED", direction = Relationship.OUTGOING)
+  private Set<User> employees = new LinkedHashSet<>();
 }
