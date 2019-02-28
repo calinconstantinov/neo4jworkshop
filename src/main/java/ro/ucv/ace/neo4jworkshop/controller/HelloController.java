@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.Company;
+import ro.ucv.ace.neo4jworkshop.model.Like;
 import ro.ucv.ace.neo4jworkshop.model.Post;
 import ro.ucv.ace.neo4jworkshop.model.User;
-import ro.ucv.ace.neo4jworkshop.repository.CompanyRepository;
-import ro.ucv.ace.neo4jworkshop.repository.HelperNeo4jRepository;
-import ro.ucv.ace.neo4jworkshop.repository.PostRepository;
-import ro.ucv.ace.neo4jworkshop.repository.UserRepository;
+import ro.ucv.ace.neo4jworkshop.repository.*;
 
 @RestController
 @RequestMapping("/hello")
@@ -29,6 +27,9 @@ public class HelloController {
 
   @Autowired
   private PostRepository postRepository;
+
+  @Autowired
+  private CommentRepository commentRepository;
 
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
@@ -191,7 +192,17 @@ public class HelloController {
     postRepository.save(calinPost2);
     postRepository.findByPoster_Name("Calin");
 
-    mihai.likePost(calinPost1, calinPost2);
+    Like mihaiLikesCalinPost1 = new Like();
+    mihaiLikesCalinPost1.setUser(mihai);
+    mihaiLikesCalinPost1.setPost(calinPost1);
+    mihaiLikesCalinPost1.setTimestamp(System.currentTimeMillis());
+
+    Like mihaiLikesCalinPost2 = new Like();
+    mihaiLikesCalinPost2.setUser(mihai);
+    mihaiLikesCalinPost2.setPost(calinPost2);
+    mihaiLikesCalinPost2.setTimestamp(System.currentTimeMillis());
+
+    mihai.likePost(mihaiLikesCalinPost1, mihaiLikesCalinPost2);
     userRepository.save(mihai);
 
     return "Hello " + name + "!";
