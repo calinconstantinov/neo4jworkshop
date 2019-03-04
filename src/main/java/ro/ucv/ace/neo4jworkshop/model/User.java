@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;

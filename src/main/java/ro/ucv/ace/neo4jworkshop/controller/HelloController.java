@@ -1,17 +1,17 @@
 package ro.ucv.ace.neo4jworkshop.controller;
 
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ro.ucv.ace.neo4jworkshop.model.Company;
-import ro.ucv.ace.neo4jworkshop.model.Like;
-import ro.ucv.ace.neo4jworkshop.model.Post;
-import ro.ucv.ace.neo4jworkshop.model.User;
+import ro.ucv.ace.neo4jworkshop.model.*;
+import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 import ro.ucv.ace.neo4jworkshop.repository.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/hello")
 public class HelloController {
@@ -29,7 +29,13 @@ public class HelloController {
   private PostRepository postRepository;
 
   @Autowired
+  private LikeRepository likeRepository;
+
+  @Autowired
   private CommentRepository commentRepository;
+
+  @Autowired
+  private ReactionTypeRepository reactionTypeRepository;
 
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
@@ -39,6 +45,9 @@ public class HelloController {
     calin.setUuid(1);
     calin.setName("Calin");
     userRepository.save(calin);
+
+    log.info("Found user with UUID '1': " + userRepository.findByUuid(1).getName());
+    log.info("Found user with Name 'Calin': " + userRepository.findByName("Calin").getUuid());
 
     User mihai = new User();
     mihai.setUuid(2);
@@ -192,6 +201,8 @@ public class HelloController {
     postRepository.save(calinPost2);
     postRepository.findByPoster_Name("Calin");
 
+    log.info("Number of Posts written by User with Name 'Calin': " + postRepository.findByPoster_Name("Calin").size());
+
     Like mihaiLikesCalinPost1 = new Like();
     mihaiLikesCalinPost1.setUser(mihai);
     mihaiLikesCalinPost1.setPost(calinPost1);
@@ -204,6 +215,46 @@ public class HelloController {
 
     mihai.likePost(mihaiLikesCalinPost1, mihaiLikesCalinPost2);
     userRepository.save(mihai);
+
+    log.info("Number of Likes given by User with Name 'Mihai': " + likeRepository.findByUser_Name("Mihai").size());
+
+    Comment valentinaComment1CalinPost1 = new Comment();
+    valentinaComment1CalinPost1.setUuid(1);
+    valentinaComment1CalinPost1.setCommenter(valentina);
+    valentinaComment1CalinPost1.setPost(calinPost1);
+    valentinaComment1CalinPost1.setContent("You're so cool!");
+    commentRepository.save(valentinaComment1CalinPost1);
+
+    Comment mihaiComment1CalinPost1 = new Comment();
+    mihaiComment1CalinPost1.setUuid(2);
+    mihaiComment1CalinPost1.setCommenter(mihai);
+    mihaiComment1CalinPost1.setPost(calinPost2);
+    mihaiComment1CalinPost1.setContent("We're so fortunate to be part of this!");
+    commentRepository.save(mihaiComment1CalinPost1);
+
+    Comment vladucuComment1CalinPost2 = new Comment();
+    vladucuComment1CalinPost2.setUuid(3);
+    vladucuComment1CalinPost2.setCommenter(vladucu);
+    vladucuComment1CalinPost2.setPost(calinPost2);
+    vladucuComment1CalinPost2.setContent("Best workshop EVER!");
+    commentRepository.save(vladucuComment1CalinPost2);
+
+    Comment mihaiComment2CalinPost1 = new Comment();
+    mihaiComment2CalinPost1.setUuid(4);
+    mihaiComment2CalinPost1.setCommenter(mihai);
+    mihaiComment2CalinPost1.setPost(calinPost2);
+    mihaiComment2CalinPost1.setContent("Mind blowing !!!11oneone11");
+    commentRepository.save(mihaiComment2CalinPost1);
+
+    ReactionType loveReactionType = new ReactionType();
+    loveReactionType.setUuid(1);
+    loveReactionType.setName("Love");
+    reactionTypeRepository.save(loveReactionType);
+
+    ReactionType sadReactionType = new ReactionType();
+    sadReactionType.setUuid(2);
+    sadReactionType.setName("Sad");
+    reactionTypeRepository.save(sadReactionType);
 
     return "Hello " + name + "!";
   }

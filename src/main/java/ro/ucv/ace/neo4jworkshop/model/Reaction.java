@@ -12,7 +12,7 @@ import org.neo4j.ogm.annotation.Relationship;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Comment {
+public class Reaction {
 
   @Setter(AccessLevel.NONE)
   private Long id;
@@ -21,11 +21,14 @@ public class Comment {
   @Index(unique = true)
   private Integer uuid;
 
-  private String content;
+  private Long timestamp;
 
-  @Relationship(type = "COMMENTED_ON", direction = Relationship.INCOMING)
-  private User commenter;
+  @Relationship(type = "REACTED", direction = Relationship.INCOMING)
+  private User reacter;
 
-  @Relationship(type = "ON_POST")
+  @Relationship(type = "OF_TYPE")
+  private ReactionType type;
+
+  @Relationship(type = "AT_POST")
   private Post post;
 }
