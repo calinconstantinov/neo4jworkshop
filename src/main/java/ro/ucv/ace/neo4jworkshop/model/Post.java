@@ -21,8 +21,8 @@ public class Post {
   @Index(unique = true)
   private Integer uuid;
 
-  private String content;
-
   @Relationship(type = "POSTED_BY")
   private User poster;
+
+  private String content;
 }

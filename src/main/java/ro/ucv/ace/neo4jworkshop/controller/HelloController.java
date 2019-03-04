@@ -46,8 +46,8 @@ public class HelloController {
     calin.setName("Calin");
     userRepository.save(calin);
 
-    log.info("Found user with UUID '1': " + userRepository.findByUuid(1).getName());
-    log.info("Found user with Name 'Calin': " + userRepository.findByName("Calin").getUuid());
+    log.info("Found user with UUID '1', having Name: " + userRepository.findByUuid(1).getName());
+    log.info("Found user with Name 'Calin', having UUID: " + userRepository.findByName("Calin").getUuid());
 
     User mihai = new User();
     mihai.setUuid(2);
@@ -245,6 +245,15 @@ public class HelloController {
     mihaiComment2CalinPost1.setPost(calinPost2);
     mihaiComment2CalinPost1.setContent("Mind blowing !!!11oneone11");
     commentRepository.save(mihaiComment2CalinPost1);
+
+    Comment stefanComment1CalinPost2 = new Comment();
+    stefanComment1CalinPost2.setUuid(5);
+    stefanComment1CalinPost2.setCommenter(stefan);
+    stefanComment1CalinPost2.setPost(calinPost2);
+    stefanComment1CalinPost2.setContent("To think I almost missed it...");
+    commentRepository.save(stefanComment1CalinPost2);
+
+    log.info("Number of Comments on Post with UUID '2': " + commentRepository.findByPost_Uuid(2).size());
 
     ReactionType loveReactionType = new ReactionType();
     loveReactionType.setUuid(1);

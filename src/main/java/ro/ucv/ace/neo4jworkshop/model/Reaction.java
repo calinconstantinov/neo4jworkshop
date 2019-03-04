@@ -21,14 +21,14 @@ public class Reaction {
   @Index(unique = true)
   private Integer uuid;
 
-  private Long timestamp;
-
   @Relationship(type = "REACTED", direction = Relationship.INCOMING)
   private User reacter;
 
   @Relationship(type = "OF_TYPE")
   private ReactionType type;
 
-  @Relationship(type = "AT_POST")
-  private Post post;
+  @Relationship(type = "AT_COMMENT")
+  private Comment comment;
+
+  private Long timestamp;
 }

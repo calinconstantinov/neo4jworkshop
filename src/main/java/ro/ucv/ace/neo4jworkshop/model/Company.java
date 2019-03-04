@@ -24,8 +24,8 @@ public class Company {
   @Index(unique = true)
   private Integer uuid;
 
-  private String name;
-
   @Relationship(type = "EMPLOYED")
   private Set<User> employees = new LinkedHashSet<>();
+
+  private String name;
 }

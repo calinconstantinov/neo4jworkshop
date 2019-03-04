@@ -26,13 +26,13 @@ public class User {
   @Index(unique = true)
   private Integer uuid;
 
-  private String name;
-
   @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
   private Set<User> friends = new LinkedHashSet<>();
 
   @Relationship(type = "LIKES_POST", direction = Relationship.UNDIRECTED)
   private Set<Like> postLikes = new LinkedHashSet<>();
+
+  private String name;
 
   public void addFriend(User... oneOrMoreFriends) {
     friends.addAll(Arrays.asList(oneOrMoreFriends));
