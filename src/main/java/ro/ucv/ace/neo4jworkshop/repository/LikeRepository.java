@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface LikeRepository extends Neo4jRepository<Like, Long> {
 
-  Set<Like> findByUser_Name(String name);
+  Set<Like> findByUser_Name(String userName);
 }

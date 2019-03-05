@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface CommentRepository extends Neo4jRepository<Comment, Long> {
 
-  Set<Comment> findByPost_Uuid(Integer uuid);
+  Set<Comment> findByPost_Uuid(Integer postUuid);
 }

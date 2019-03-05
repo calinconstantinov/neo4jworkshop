@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface PostRepository extends Neo4jRepository<Post, Long> {
 
-  Set<Post> findByPoster_Name(String name);
+  Set<Post> findByPoster_Name(String posterName);
 }

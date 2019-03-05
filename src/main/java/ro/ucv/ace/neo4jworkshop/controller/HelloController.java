@@ -37,6 +37,9 @@ public class HelloController {
   @Autowired
   private ReactionTypeRepository reactionTypeRepository;
 
+  @Autowired
+  private ReactionRepository reactionRepository;
+
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
     helperNeo4jRepository.deleteGraph();
@@ -260,10 +263,34 @@ public class HelloController {
     loveReactionType.setName("Love");
     reactionTypeRepository.save(loveReactionType);
 
-    ReactionType sadReactionType = new ReactionType();
-    sadReactionType.setUuid(2);
-    sadReactionType.setName("Sad");
-    reactionTypeRepository.save(sadReactionType);
+    ReactionType hahaReactionType = new ReactionType();
+    hahaReactionType.setUuid(2);
+    hahaReactionType.setName("Haha");
+    reactionTypeRepository.save(hahaReactionType);
+
+    Reaction emilianLoveValentinaComment1CalinPost1 = new Reaction();
+    emilianLoveValentinaComment1CalinPost1.setUuid(1);
+    emilianLoveValentinaComment1CalinPost1.setType(loveReactionType);
+    emilianLoveValentinaComment1CalinPost1.setReacter(emilian);
+    emilianLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
+    reactionRepository.save(emilianLoveValentinaComment1CalinPost1);
+
+    Reaction calinHahaStefanComment1CalinPost2 = new Reaction();
+    calinHahaStefanComment1CalinPost2.setUuid(2);
+    calinHahaStefanComment1CalinPost2.setType(hahaReactionType);
+    calinHahaStefanComment1CalinPost2.setReacter(calin);
+    calinHahaStefanComment1CalinPost2.setComment(stefanComment1CalinPost2);
+    reactionRepository.save(calinHahaStefanComment1CalinPost2);
+
+    Reaction mihaelaLoveValentinaComment1CalinPost1 = new Reaction();
+    mihaelaLoveValentinaComment1CalinPost1.setUuid(3);
+    mihaelaLoveValentinaComment1CalinPost1.setType(loveReactionType);
+    mihaelaLoveValentinaComment1CalinPost1.setReacter(mihaela);
+    mihaelaLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
+    reactionRepository.save(mihaelaLoveValentinaComment1CalinPost1);
+
+    log.info("Found Reactions of type 'Love': " + reactionRepository.findByType_Name("Love").size());
+    log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
     return "Hello " + name + "!";
   }
