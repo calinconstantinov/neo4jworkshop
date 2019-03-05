@@ -9,9 +9,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,10 +24,13 @@ public class User {
   @Index(unique = true)
   private Integer uuid;
 
+  @Relationship(type = "HAS_CREDENTIALS")
+  private Credentials credentials;
+
   @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
   private Set<User> friends = new LinkedHashSet<>();
 
-  @Relationship(type = "LIKES_POST", direction = Relationship.UNDIRECTED)
+  @Relationship(type = "LIKES_POST")
   private Set<Like> postLikes = new LinkedHashSet<>();
 
   private String name;

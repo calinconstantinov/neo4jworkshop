@@ -2,6 +2,7 @@ package ro.ucv.ace.neo4jworkshop.controller;
 
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,16 @@ import ro.ucv.ace.neo4jworkshop.repository.*;
 public class HelloController {
 
   @Autowired
+  private Session session;
+
+  @Autowired
   private HelperNeo4jRepository helperNeo4jRepository;
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private CredentialsRepository credentialsRepository;
 
   @Autowired
   private CompanyRepository companyRepository;
@@ -51,6 +58,17 @@ public class HelloController {
 
     log.info("Found user with UUID '1', having Name: " + userRepository.findByUuid(1).getName());
     log.info("Found user with Name 'Calin', having UUID: " + userRepository.findByName("Calin").getUuid());
+
+    Credentials calinCredentials = new Credentials();
+    calinCredentials.setUuid(1);
+    calinCredentials.setUser(calin);
+    calinCredentials.setEmail("foo@bar.com");
+    calinCredentials.setPassword("Passw0rd");
+    credentialsRepository.save(calinCredentials);
+
+    session.clear();
+    log.info("Found Credentials for User with name 'Calin': " + credentialsRepository.findByUser_Name("Calin"));
+    userRepository.save(calin);
 
     User mihai = new User();
     mihai.setUuid(2);
@@ -137,7 +155,7 @@ public class HelloController {
     razvan.addFriend(calin, vladucu, mihai, valentina, felix, stefan, mihaela);
     userRepository.save(razvan);
 
-    stefan.addFriend(calin, razvan, mihai, mihaela);
+    stefan.addFriend(calin, razvan, vladucu, mihai, mihaela);
     userRepository.save(stefan);
 
     emilian.addFriend(valentina, mihai, vladucu, calin);
@@ -202,7 +220,6 @@ public class HelloController {
     calinPost2.setPoster(calin);
     calinPost2.setContent("I'm at the Neo4j Workshop!");
     postRepository.save(calinPost2);
-    postRepository.findByPoster_Name("Calin");
 
     log.info("Number of Posts written by User with Name 'Calin': " + postRepository.findByPoster_Name("Calin").size());
 
