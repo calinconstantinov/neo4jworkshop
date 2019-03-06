@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.*;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 import ro.ucv.ace.neo4jworkshop.repository.*;
+import ro.ucv.ace.neo4jworkshop.service.TimeSetupService;
 
 @Slf4j
 @RestController
@@ -47,9 +48,15 @@ public class HelloController {
   @Autowired
   private ReactionRepository reactionRepository;
 
+  @Autowired
+  private TimeSetupService timeSetupService;
+
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
     helperNeo4jRepository.deleteGraph();
+
+    //this would be a another way of cleaning the database.
+    //session.purgeDatabase();
 
     User calin = new User();
     calin.setUuid(1);
@@ -66,9 +73,19 @@ public class HelloController {
     calinCredentials.setPassword("Passw0rd");
     credentialsRepository.save(calinCredentials);
 
+    //this clears the mapping context
     session.clear();
     log.info("Found Credentials for User with name 'Calin': " + credentialsRepository.findByUser_Name("Calin"));
+
     userRepository.save(calin);
+    //refresh the entity
+    calin = userRepository.findByName("Calin");
+    log.info("Now found Credentials for User with name 'Calin': " + credentialsRepository.findByUser_Name("Calin"));
+
+    calinCredentials.setUser(calin);
+    credentialsRepository.save(calinCredentials);
+    log.info("After retrying, found Credentials for User with name 'Calin': " + credentialsRepository.findByUser_Name("Calin"));
+    log.info("User 'Calin' reflects credential assignment: " + calin.getCredentials());
 
     User mihai = new User();
     mihai.setUuid(2);
@@ -308,6 +325,9 @@ public class HelloController {
 
     log.info("Found Reactions of type 'Love': " + reactionRepository.findByType_Name("Love").size());
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
+
+
+    //timeSetupService.setupTime();
 
     return "Hello " + name + "!";
   }
