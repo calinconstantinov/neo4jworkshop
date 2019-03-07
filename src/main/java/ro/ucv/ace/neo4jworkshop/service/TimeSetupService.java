@@ -16,7 +16,7 @@ public class TimeSetupService {
   public void setupTime() {
     String buildTimeNodes = "WITH range(2019, 2019) AS years, range(3,3) AS months, range(0,23) AS hours " +
         "FOREACH(year IN years | " +
-        "  MERGE (y:Year {year: year, externalId: toString(year)}) " +
+        "  MERGE (y:Year {year: year, uuid: toString(year)}) " +
         "  FOREACH(month IN months | " +
         "    CREATE (m:Month {month: month}) " +
         "    MERGE (y)-[:HAS_MONTH]->(m) " +
@@ -58,31 +58,31 @@ public class TimeSetupService {
         ");";
     session.query(linkHours, Collections.emptyMap());
 
-    String monthExternalId = "MATCH (y:Year)-[:HAS_MONTH]->(m:Month) " +
+    String monthUuid = "MATCH (y:Year)-[:HAS_MONTH]->(m:Month) " +
         "WITH y, m, " +
         "(CASE " +
-        "   WHEN m.month < 10 THEN y.externalId + '0' + m.month " +
-        "   ELSE y.externalId + m.month END) " +
-        "as externalId " +
-        "SET m.externalId = externalId";
-    session.query(monthExternalId, Collections.emptyMap());
+        "   WHEN m.month < 10 THEN y.uuid + '0' + m.month " +
+        "   ELSE y.uuid + m.month END) " +
+        "as uuid " +
+        "SET m.uuid = uuid";
+    session.query(monthUuid, Collections.emptyMap());
 
-    String dayExternalId = "MATCH (m:Month)-[:HAS_DAY]->(d:Day) " +
+    String dayUuid = "MATCH (m:Month)-[:HAS_DAY]->(d:Day) " +
         "WITH m, d, " +
         "(CASE " +
-        "   WHEN d.day < 10 THEN m.externalId + '0' + d.day " +
-        "   ELSE m.externalId + d.day END) " +
-        "as externalId " +
-        "SET d.externalId = externalId";
-    session.query(dayExternalId, Collections.emptyMap());
+        "   WHEN d.day < 10 THEN m.uuid + '0' + d.day " +
+        "   ELSE m.uuid + d.day END) " +
+        "as uuid " +
+        "SET d.uuid = uuid";
+    session.query(dayUuid, Collections.emptyMap());
 
-    String hourExternalId = "MATCH (d:Day)-[:HAS_HOUR]->(h:Hour) " +
+    String hourUuid = "MATCH (d:Day)-[:HAS_HOUR]->(h:Hour) " +
         "WITH d, h, " +
         "(CASE " +
-        "   WHEN h.hour < 10 THEN d.externalId + '0' + h.hour " +
-        "   ELSE d.externalId + h.hour END) " +
-        "as externalId " +
-        "SET h.externalId = externalId";
-    session.query(hourExternalId, Collections.emptyMap());
+        "   WHEN h.hour < 10 THEN d.uuid + '0' + h.hour " +
+        "   ELSE d.uuid + h.hour END) " +
+        "as uuid " +
+        "SET h.uuid = uuid";
+    session.query(hourUuid, Collections.emptyMap());
   }
 }

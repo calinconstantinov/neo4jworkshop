@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.*;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 import ro.ucv.ace.neo4jworkshop.repository.*;
+import ro.ucv.ace.neo4jworkshop.service.ExternalIdBuilderService;
 import ro.ucv.ace.neo4jworkshop.service.TimeSetupService;
 
 @Slf4j
@@ -50,6 +51,12 @@ public class HelloController {
 
   @Autowired
   private TimeSetupService timeSetupService;
+
+  @Autowired
+  private ExternalIdBuilderService externalIdBuilderService;
+
+  @Autowired
+  private HourRepository hourRepository;
 
   @GetMapping
   public String hello(@RequestParam(value = "name") String name) {
@@ -327,7 +334,7 @@ public class HelloController {
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
 
-    //timeSetupService.setupTime();
+    timeSetupService.setupTime();
 
     return "Hello " + name + "!";
   }
