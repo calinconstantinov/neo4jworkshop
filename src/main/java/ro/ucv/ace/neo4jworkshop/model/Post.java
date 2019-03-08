@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -23,6 +25,9 @@ public class Post {
 
   @Relationship(type = "POSTED_BY")
   private User poster;
+
+  @Relationship(type = "ON_POST", direction = Relationship.INCOMING)
+  private Set<Comment> comments;
 
   private String content;
 }

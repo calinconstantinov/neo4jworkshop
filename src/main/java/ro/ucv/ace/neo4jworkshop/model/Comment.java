@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import ro.ucv.ace.neo4jworkshop.model.time.Hour;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -31,8 +32,12 @@ public class Comment {
   @Relationship(type = "REPLIED TO", direction = Relationship.INCOMING)
   private Set<Comment> replies = new LinkedHashSet<>();
 
-  @Relationship(type = "ON_POST")
-  private Post post;
+  @Relationship(type = "WRITTEN_AT")
+  private Hour hour;
 
   private String content;
+
+  public void addReply(Comment reply) {
+    replies.add(reply);
+  }
 }

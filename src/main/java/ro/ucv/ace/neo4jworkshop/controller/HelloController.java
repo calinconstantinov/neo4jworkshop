@@ -91,7 +91,8 @@ public class HelloController {
 
     calinCredentials.setUser(calin);
     credentialsRepository.save(calinCredentials);
-    log.info("After retrying, found Credentials for User with name 'Calin': " + credentialsRepository.findByUser_Name("Calin"));
+    log.info("After retrying, found Credentials for User with name 'Calin': " + credentialsRepository
+        .findByUser_Name("Calin"));
     log.info("User 'Calin' reflects credential assignment: " + calin.getCredentials());
 
     User mihai = new User();
@@ -233,6 +234,9 @@ public class HelloController {
     db.setEmployees(Sets.newHashSet(razvan));
     companyRepository.save(db);
 
+    log.info("Found Companies related to Company with name 'Endava': " + companyRepository
+        .findFriendsOfEmployeesCompanies("Endava"));
+
     Post calinPost1 = new Post();
     calinPost1.setUuid(1);
     calinPost1.setPoster(calin);
@@ -265,39 +269,35 @@ public class HelloController {
     Comment valentinaComment1CalinPost1 = new Comment();
     valentinaComment1CalinPost1.setUuid(1);
     valentinaComment1CalinPost1.setCommenter(valentina);
-    valentinaComment1CalinPost1.setPost(calinPost1);
     valentinaComment1CalinPost1.setContent("You're so cool!");
-    commentRepository.save(valentinaComment1CalinPost1);
+    calinPost1.setComments(Sets.newHashSet(valentinaComment1CalinPost1));
+    postRepository.save(calinPost1);
 
     Comment mihaiComment1CalinPost1 = new Comment();
     mihaiComment1CalinPost1.setUuid(2);
     mihaiComment1CalinPost1.setCommenter(mihai);
-    mihaiComment1CalinPost1.setPost(calinPost2);
     mihaiComment1CalinPost1.setContent("We're so fortunate to be part of this!");
-    commentRepository.save(mihaiComment1CalinPost1);
 
     Comment vladucuComment1CalinPost2 = new Comment();
     vladucuComment1CalinPost2.setUuid(3);
     vladucuComment1CalinPost2.setCommenter(vladucu);
-    vladucuComment1CalinPost2.setPost(calinPost2);
     vladucuComment1CalinPost2.setContent("Best workshop EVER!");
-    commentRepository.save(vladucuComment1CalinPost2);
 
     Comment mihaiComment2CalinPost1 = new Comment();
     mihaiComment2CalinPost1.setUuid(4);
     mihaiComment2CalinPost1.setCommenter(mihai);
-    mihaiComment2CalinPost1.setPost(calinPost2);
     mihaiComment2CalinPost1.setContent("Mind blowing !!!11oneone11");
-    commentRepository.save(mihaiComment2CalinPost1);
 
     Comment stefanComment1CalinPost2 = new Comment();
     stefanComment1CalinPost2.setUuid(5);
     stefanComment1CalinPost2.setCommenter(stefan);
-    stefanComment1CalinPost2.setPost(calinPost2);
     stefanComment1CalinPost2.setContent("To think I almost missed it...");
-    commentRepository.save(stefanComment1CalinPost2);
 
-    log.info("Number of Comments on Post with UUID '2': " + commentRepository.findByPost_Uuid(2).size());
+    calinPost2.setComments(Sets.newHashSet(mihaiComment1CalinPost1, vladucuComment1CalinPost2, mihaiComment2CalinPost1,
+        stefanComment1CalinPost2));
+    postRepository.save(calinPost2);
+
+    log.info("Number of Comments by User with Name 'Mihai': " + commentRepository.findByCommenter_Name("Mihai").size());
 
     ReactionType loveReactionType = new ReactionType();
     loveReactionType.setUuid(1);
@@ -333,8 +333,16 @@ public class HelloController {
     log.info("Found Reactions of type 'Love': " + reactionRepository.findByType_Name("Love").size());
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
-    log.info("Found Companies related to Company with name 'Endava': " + companyRepository.findFriendsOfEmployeesCompanies("Endava"));
     timeSetupService.setupTime();
+
+    Comment calinReplyVladucuComment1CalinPost2 = new Comment();
+    calinReplyVladucuComment1CalinPost2.setUuid(6);
+    calinReplyVladucuComment1CalinPost2.setCommenter(calin);
+    calinReplyVladucuComment1CalinPost2
+        .setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 9)));
+    calinReplyVladucuComment1CalinPost2.setContent("Thanks! <3");
+    vladucuComment1CalinPost2.addReply(calinReplyVladucuComment1CalinPost2);
+    commentRepository.save(vladucuComment1CalinPost2);
 
     return "Hello " + name + "!";
   }
