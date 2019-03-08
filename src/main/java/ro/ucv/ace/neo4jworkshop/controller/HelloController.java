@@ -333,7 +333,7 @@ public class HelloController {
     log.info("Found Reactions of type 'Love': " + reactionRepository.findByType_Name("Love").size());
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
-
+    log.info("Found Companies related to Company with name 'Endava': " + companyRepository.findFriendsOfEmployeesCompanies("Endava"));
     timeSetupService.setupTime();
 
     return "Hello " + name + "!";

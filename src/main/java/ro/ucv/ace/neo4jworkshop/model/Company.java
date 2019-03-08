@@ -1,9 +1,6 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -13,6 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
 public class Company {
@@ -27,5 +25,6 @@ public class Company {
   @Relationship(type = "EMPLOYED")
   private Set<User> employees = new LinkedHashSet<>();
 
+  @ToString.Include
   private String name;
 }
