@@ -93,7 +93,7 @@ public class HelloController {
     credentialsRepository.save(calinCredentials);
     log.info("After retrying, found Credentials for User with name 'Calin': " + credentialsRepository
         .findByUser_Name("Calin"));
-    log.info("User 'Calin' reflects credential assignment: " + calin.getCredentials());
+    log.info("Refreshed User 'Calin' now reflects credential assignment: " + calin.getCredentials());
 
     User mihai = new User();
     mihai.setUuid(2);
@@ -149,6 +149,46 @@ public class HelloController {
     razvan.setUuid(12);
     razvan.setName("Razvan");
     userRepository.save(razvan);
+
+    User maria = new User();
+    maria.setUuid(13);
+    maria.setName("Maria");
+    userRepository.save(maria);
+
+    User viorel = new User();
+    viorel.setUuid(14);
+    viorel.setName("Viorel");
+    userRepository.save(viorel);
+
+    User ines = new User();
+    ines.setUuid(15);
+    ines.setName("Ines");
+    userRepository.save(ines);
+
+    User oana = new User();
+    oana.setUuid(16);
+    oana.setName("Oana");
+    userRepository.save(oana);
+
+    User lucian = new User();
+    lucian.setUuid(17);
+    lucian.setName("Lucian");
+    userRepository.save(lucian);
+
+    User raduT = new User();
+    raduT.setUuid(18);
+    raduT.setName("RaduT");
+    userRepository.save(raduT);
+
+    User raduD = new User();
+    raduD.setUuid(19);
+    raduD.setName("RaduD");
+    userRepository.save(raduD);
+
+    User madalina = new User();
+    madalina.setUuid(20);
+    madalina.setName("Madalina");
+    userRepository.save(madalina);
 
     calin.addFriend(valentina, vladucu, mihaela, mihai, emilian, felix, andra, adelina, theodora, stefan, razvan);
     userRepository.save(calin);
@@ -343,6 +383,14 @@ public class HelloController {
     calinReplyVladucuComment1CalinPost2.setContent("Thanks! <3");
     vladucuComment1CalinPost2.addReply(calinReplyVladucuComment1CalinPost2);
     commentRepository.save(vladucuComment1CalinPost2);
+
+    Comment emilianReplyStefanComment1CalinPost2 = new Comment();
+    emilianReplyStefanComment1CalinPost2.setUuid(7);
+    emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
+    emilianReplyStefanComment1CalinPost2.setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 10)));
+    emilianReplyStefanComment1CalinPost2.setContent("That would've sucked haha");
+    stefanComment1CalinPost2.addReply(emilianReplyStefanComment1CalinPost2);
+    commentRepository.save(emilianReplyStefanComment1CalinPost2);
 
     return "Hello " + name + "!";
   }
