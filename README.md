@@ -5,8 +5,11 @@ Spring Boot Spring Data Java Neo4j Workshop
 **(Optional) Start a local container**  
 docker run -d -e NEO4J_dbms_security_procedures_unrestricted=apoc.\\\* -e NEO4J_apoc_export_file_enabled=true -e NEO4J_apoc_import_file_enabled=true -e=NEO4J_AUTH=none -e=NEO4J_ACCEPT_LICENSE_AGREEMENT=yes --publish=7474:7474 --publish=7687:7687 discsports/neo4j-apoc
 
-**Sample DB:**
+**Sample DB**
 https://gist.github.com/calinconstantinov/2324c8fed78774ef28b7cc9ab7bdaeaa
+
+**Load dataset**  
+CALL apoc.import.graphml('https://gist.githubusercontent.com/calinconstantinov/2324c8fed78774ef28b7cc9ab7bdaeaa/raw/0370eeb41c4191a8d7c1b8d11ccd03f050b5e523/sample', {readLabels: true, batchSize: 10000, storeNodeIds: false}) 
 
 **Sample Queries**
 1. _Retrieve a user_  
