@@ -121,7 +121,7 @@ OPTIONAL MATCH (comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactio
 (reaction)<-[:REACTED]-(reacter:User)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter
 
-1. _Match all social data related to 'Calin'  
+1. _Match all social data related to 'Calin'_  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
