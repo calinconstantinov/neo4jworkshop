@@ -6,7 +6,7 @@ Spring Boot Spring Data Java Neo4j Workshop
 docker run -e NEO4J_dbms_security_procedures_unrestricted=apoc.\\\* -e NEO4J_apoc_export_file_enabled=true -e NEO4J_apoc_import_file_enabled=true -e=NEO4J_AUTH=none -e=NEO4J_ACCEPT_LICENSE_AGREEMENT=yes --publish=7474:7474 --publish=7687:7687 discsports/neo4j-apoc
 
 **Sample DB**
-https://gist.github.com/calinconstantinov/2324c8fed78774ef28b7cc9ab7bdaeaa
+https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml
 
 **Database setup**
 1. _GraphML import_  
