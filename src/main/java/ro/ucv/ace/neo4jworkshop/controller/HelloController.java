@@ -291,6 +291,13 @@ public class HelloController {
 
     log.info("Number of Posts written by User with Name 'Calin': " + postRepository.findByPoster_Name("Calin").size());
 
+    Like calinLikesCalinPost1 = new Like();
+    calinLikesCalinPost1.setUser(calin);
+    calinLikesCalinPost1.setPost(calinPost1);
+    calinLikesCalinPost1.setTimestamp(System.currentTimeMillis());
+    calin.likePost(calinLikesCalinPost1);
+    userRepository.save(calin);
+
     Like mihaiLikesCalinPost1 = new Like();
     mihaiLikesCalinPost1.setUser(mihai);
     mihaiLikesCalinPost1.setPost(calinPost1);

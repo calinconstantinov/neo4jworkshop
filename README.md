@@ -70,6 +70,23 @@ MATCH (n:User)-[:FRIENDS_WITH]-(friend)
 OPTIONAL MATCH (n)-[]-(c:Credentials)  
 RETURN c, n, count(friend)  
 
+9. _Matching Calin's posts_  
+MATCH (n:User)  
+WHERE n.name = 'Calin'  
+WITH n  
+MATCH (p:Post)-[:POSTED_BY]->(n)  
+RETURN n, p
+
+10. _Matching Calin's posts' likes__
+MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
+WHERE n.name = 'Calin'  
+RETURN n, p, like, liker
+
+11. _Matching non-narcissistic likes_
+MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
+WHERE n.name = 'Calin' AND n.uuid <> liker.uuid  
+RETURN n.name, p.content, like.timestamp, liker.name
+
 20. _Get a sequence of days:_  
 MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
 WHERE firstHour.uuid = '2019031500'  
