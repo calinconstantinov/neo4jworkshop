@@ -29,7 +29,7 @@ public class Comment {
   private User commenter;
 
   @Setter(AccessLevel.NONE)
-  @Relationship(type = "REPLIED TO", direction = Relationship.INCOMING)
+  @Relationship(type = "REPLIED_TO", direction = Relationship.INCOMING)
   private Set<Comment> replies = new LinkedHashSet<>();
 
   @Relationship(type = "WRITTEN_AT")

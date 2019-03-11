@@ -77,12 +77,12 @@ WITH n
 MATCH (p:Post)-[:POSTED_BY]->(n)  
 RETURN n, p
 
-1. _Matching Calin's posts' likes__
+1. _Matching Calin's posts' likes_  
 MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
 WHERE n.name = 'Calin'  
 RETURN n, p, like, liker
 
-1. _Matching non-narcissistic likes_
+1. _Matching non-narcissistic likes_  
 MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
 WHERE n.name = 'Calin' AND n.uuid <> liker.uuid  
 RETURN n.name, p.content, like.timestamp, liker.name
@@ -113,7 +113,7 @@ MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTE
 (r)<-[:REACTED]-(reacter:User)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter
 
-1. _Include comments with no reactions_
+1. _Include comments with no reactions_  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
@@ -122,11 +122,33 @@ OPTIONAL MATCH (comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactio
 (reaction)<-[:REACTED]-(reacter:User)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter
 
-1. _Modelling time_
+1. _Match all social data related to 'Calin'  
+MATCH (user:User)  
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(commenter:User)
+OPTIONAL MATCH (comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactionType:ReactionType)  
+OPTIONAL MATCH (reaction)<-[:REACTED]-(reacter:User)  
+OPTIONAL MATCH (replier:User)-[:COMMENTED]->(reply:Comment)-[:REPLIED_TO]->(comment)  
+RETURN user, post, comment, commenter, reaction, reactionType, reacter, reply, replier
+
+1. Where do Calin's friends work?
+MATCH (user:User)  
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)-[:FRIENDS_WITH]-(friend)<-[:EMPLOYED]-(company:Company)  
+RETURN friend.name, company.name
+
+1. Match all data
+MATCH (n)  
+RETURN n
+
+**Handling time**
+1. _Time data model_  
 MATCH (y:Year)-[:HAS_MONTH]->(m:Month)-[:HAS_DAY]->(d:Day)-[:HAS_HOUR]->(h:Hour)   
 RETURN y, m, d, h
 
-1. _Ordering time_
+1. _Ordering time_  
 MATCH (y:Year)-[:HAS_MONTH]->(m:Month)-[:HAS_DAY]->(d:Day)-[:HAS_HOUR]->(h:Hour)   
 RETURN y.year, m.month, d.day, h.hour  
 ORDER BY y.year ASC, m.month ASC, d.day ASC, h.hour ASC
