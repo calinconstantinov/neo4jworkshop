@@ -132,14 +132,14 @@ OPTIONAL MATCH (reaction)<-[:REACTED]-(reacter:User)
 OPTIONAL MATCH (replier:User)-[:COMMENTED]->(reply:Comment)-[:REPLIED_TO]->(comment)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter, reply, replier
 
-1. Where do Calin's friends work?
+1. Where do Calin's friends work?  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
 MATCH (user)-[:FRIENDS_WITH]-(friend)<-[:EMPLOYED]-(company:Company)  
 RETURN friend.name, company.name
 
-1. Match all data
+1. Match all data  
 MATCH (n)  
 RETURN n
 
