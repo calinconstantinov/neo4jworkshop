@@ -170,3 +170,28 @@ MATCH (hour)<-[:HAS_HOUR]-(day:Day)
 RETURN day, hour  
 
 **Data analysis**
+1. _Friendship relationships between companies_  
+MATCH (c:Company)-[:EMPLOYED]->(u:User)-[:FRIENDS_WITH]-(u2:User)<-[:EMPLOYED]-(c2:Company)  
+WHERE c.uuid <> c2.uuid AND c.name = 'Endava'  
+RETURN c2 as company, count(DISTINCT u2) as friendsOfEmployees  
+ORDER BY friendsOfEmployees DESC
+
+2. _Computing Post Power_  
+MATCH (post:Post)-[:POSTED_BY]->(poster:User)  
+WITH post, poster  
+OPTIONAL MATCH (post)<-[like:LIKES_POST]-(liker:User)  
+WHERE poster.uuid <> liker.uuid  
+WITH post, poster, count(like) as likes  
+OPTIONAL MATCH (post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(commenter:User)   
+WHERE poster.uuid <> commenter.uuid  
+WITH post, poster, likes, count(comment) as comments  
+OPTIONAL MATCH (post)<-[:ON_POST]-(comment)<-[:AT_COMMENT]-(reaction:Reaction)<-[:REACTED]-(reactor:User)  
+WHERE poster.uuid <> reactor.uuid  
+WITH post, poster, likes, comments, count(reaction) as reactions  
+OPTIONAL MATCH (post)<-[:ON_POST]-(comment)<-[:REPLIED_TO]-(reply:Comment)<-[:COMMENTED]-(replier:User)  
+WHERE poster.uuid <> replier.uuid  
+WITH post, poster, likes, comments, reactions, count(reply) as replies  
+RETURN poster.name, post.content, likes, comments, reactions, replies, 1 * likes + 2 * reactions + 3 * comments + 4 * replies AS postPower  
+ORDER BY postPower DESC
+
+3. _BFFs_
