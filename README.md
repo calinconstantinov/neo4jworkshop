@@ -12,23 +12,23 @@ https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/ma
 1. _GraphML import_  
 CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true, batchSize: 10000, storeNodeIds: false}) 
 
-2. _Schema: Constraints_  
+1. _Schema: Constraints_  
 CALL db.constraints
 
-3. _Schema: Indexes_  
+1. _Schema: Indexes_  
 CALL db.indexes
 
-4. _Schema: Meta-Graph_  
+1. _Schema: Meta-Graph_  
 CALL apoc.meta.graph 
 
-5. _APOC Schema_  
+1. _APOC Schema_  
 CALL apoc.meta.schema
 
-6. _Delete all data_  
+1. _Delete all data_  
 MATCH (n)   
 DETACH DELETE n 
 
-7. _Delete schema_  
+1. _Delete schema_  
 CALL apoc.schema.assert({},{}) 
 
 **Sample Queries**
@@ -37,61 +37,114 @@ MATCH (n:User)
 WHERE n.name='Calin'  
 RETURN n 
 
-2. _Matching credentials_  
+1. _Matching credentials_  
 MATCH (n:User)-[:HAS_CREDENTIALS]-(c)  
 WHERE n.name='Calin'  
 RETURN n, c
 
-3. _Match all users_  
+1. _Match all users_  
 MATCH (n:User)  
 RETURN n
 
-4. _Get Calin's friends_  
+1. _Get Calin's friends_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 WHERE n.name = 'Calin'  
 RETURN n, friend
 
-5. _Get all friendships once_  
+1. _Get all friendships once_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 WHERE n.uuid > friend.uuid  
 RETURN n, friend
 
-6. _Get friendships lists_  
+1. _Get friendships lists_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 RETURN n, collect(friend.name), count(friend) AS numberOfFriends  
 ORDER BY numberOfFriends DESC
 
-7. _Include credentials with friendships lists_  
+1. _Include credentials with friendships lists_  
 MATCH (c:Credentials)<-[:HAS_CREDENTIALS]-(n:User)-[:FRIENDS_WITH]-(friend)  
 RETURN n, count(friend)
 
-8. _Optional matching credentials with friendships lists_  
+1. _Optional matching credentials with friendships lists_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 OPTIONAL MATCH (n)-[]-(c:Credentials)  
 RETURN c, n, count(friend)  
 
-9. _Matching Calin's posts_  
+1. _Matching Calin's posts_  
 MATCH (n:User)  
 WHERE n.name = 'Calin'  
 WITH n  
 MATCH (p:Post)-[:POSTED_BY]->(n)  
 RETURN n, p
 
-10. _Matching Calin's posts' likes__
+1. _Matching Calin's posts' likes__
 MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
 WHERE n.name = 'Calin'  
 RETURN n, p, like, liker
 
-11. _Matching non-narcissistic likes_
+1. _Matching non-narcissistic likes_
 MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)  
 WHERE n.name = 'Calin' AND n.uuid <> liker.uuid  
 RETURN n.name, p.content, like.timestamp, liker.name
 
-20. _Get a sequence of days:_  
+1. _Match comments on Calin's posts_  
+MATCH (n:User)  
+WHERE n.name = 'Calin'  
+WITH n  
+MATCH (commenter:User)-[:COMMENTED]-(c:Comment)-[:ON_POST]->(p:Post)-[:POSTED_BY]->(n)  
+RETURN n, p, c, commenter
+
+1. _Match all the way to reactions_   
+MATCH (user:User)  
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(commenter:User),  
+(comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactionType:ReactionType),  
+(reaction)<-[:REACTED]-(reacter:User)  
+RETURN user, post, comment, commenter, reaction, reactionType, reacter
+
+1. _Debugging an incorrect query_  
+PROFILE  
+MATCH (user:User)    
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(commenter:User),  
+(comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactionType:ReactionType),  
+(r)<-[:REACTED]-(reacter:User)  
+RETURN user, post, comment, commenter, reaction, reactionType, reacter
+
+1. _Include comments with no reactions_
+MATCH (user:User)  
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(commenter:User)
+OPTIONAL MATCH (comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactionType:ReactionType),  
+(reaction)<-[:REACTED]-(reacter:User)  
+RETURN user, post, comment, commenter, reaction, reactionType, reacter
+
+1. _Modelling time_
+MATCH (y:Year)-[:HAS_MONTH]->(m:Month)-[:HAS_DAY]->(d:Day)-[:HAS_HOUR]->(h:Hour)   
+RETURN y, m, d, h
+
+1. _Ordering time_
+MATCH (y:Year)-[:HAS_MONTH]->(m:Month)-[:HAS_DAY]->(d:Day)-[:HAS_HOUR]->(h:Hour)   
+RETURN y.year, m.month, d.day, h.hour  
+ORDER BY y.year ASC, m.month ASC, d.day ASC, h.hour ASC
+ 
+1. _Get a sequence of hours:_  
 MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
-WHERE firstHour.uuid = '2019031500'  
+WHERE firstHour.uuid = '2019031522'  
 WITH firstHour + collect(h) as dayList  
 UNWIND dayList as day  
 RETURN day
+
+1. _Get a sequence of days including days:_  
+MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
+WHERE firstHour.uuid = '2019031522'  
+WITH firstHour + collect(h) as hourList  
+UNWIND hourList as hour  
+WITH hour
+MATCH (hour)<-[:HAS_HOUR]-(day:Day)  
+RETURN day, hour  
 
 **Data analysis**
