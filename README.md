@@ -10,8 +10,7 @@ https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/ma
 
 **Database setup**
 1. _GraphML import_  
-CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true, batchSize: 10000, storeNodeIds: false}) 
-
+CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true})
 1. _Schema: Constraints_  
 CALL db.constraints
 
