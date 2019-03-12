@@ -187,8 +187,14 @@ WHERE c.uuid <> c2.uuid AND c.name = 'Endava'
 RETURN c2 as company, count(DISTINCT u2) as friendsOfEmployees  
 ORDER BY friendsOfEmployees DESC
 
-2. _Computing Post Power_  
-MATCH (post:Post)-[:POSTED_BY]->(poster:User)  
+1. _Computing Post Power_  
+MATCH (post:Post)  
+WITH collect(post) as posts  
+FOREACH (post in posts |  
+CREATE (pP:PostPower {postPower: 0})  
+MERGE (pP)<-[:HAS_POWER]-(post))
+
+   MATCH (post:Post)-[:POSTED_BY]->(poster:User)  
 WITH post, poster  
 OPTIONAL MATCH (post)<-[like:LIKES_POST]-(liker:User)  
 WHERE poster.uuid <> liker.uuid  
@@ -202,7 +208,19 @@ WITH post, poster, likes, comments, count(reaction) as reactions
 OPTIONAL MATCH (post)<-[:ON_POST]-(comment)<-[:REPLIED_TO]-(reply:Comment)<-[:COMMENTED]-(replier:User)  
 WHERE poster.uuid <> replier.uuid  
 WITH post, poster, likes, comments, reactions, count(reply) as replies  
-RETURN poster.name, post.content, likes, comments, reactions, replies, 1 * likes + 2 * reactions + 3 * comments + 4 * replies AS postPower  
+WITH poster.name as posterName, post, likes, comments, reactions, replies, 1 * likes + 2 * reactions + 3 * comments + 4 * replies AS postPower  
+MATCH (post)-[:HAS_POWER]->(pp:PostPower)
+SET pp.postPower = postPower
+RETURN posterName, post.content, likes, comments, reactions, replies, postPower
 ORDER BY postPower DESC
 
-3. _BFFs_
+3. _BFFs <3_  
+MATCH (user:User)  
+WHERE user.name = 'Calin'  
+WITH user  
+MATCH (user)-[:FRIENDS_WITH]-(friend)  
+WITH user, friend  
+OPTIONAL MATCH (user)<-[:POSTED_BY]-(post:Post)  
+WITH user, friend, post  
+MATCH (friend)-[l:LIKES_POST]-(post)  
+RETURN user, friend, count(l) as likes  

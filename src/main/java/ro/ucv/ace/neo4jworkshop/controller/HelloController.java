@@ -339,8 +339,13 @@ public class HelloController {
     stefanComment1CalinPost2.setCommenter(stefan);
     stefanComment1CalinPost2.setContent("To think I almost missed it...");
 
+    Comment calinComment1CalinPost2 = new Comment();
+    calinComment1CalinPost2.setUuid(6);
+    calinComment1CalinPost2.setCommenter(calin);
+    calinComment1CalinPost2.setContent("Glad you could make it!");
+
     calinPost2.setComments(Sets.newHashSet(mihaiComment1CalinPost1, vladucuComment1CalinPost2, mihaiComment2CalinPost1,
-        stefanComment1CalinPost2));
+        stefanComment1CalinPost2, calinComment1CalinPost2));
     postRepository.save(calinPost2);
 
     log.info("Number of Comments by User with Name 'Mihai': " + commentRepository.findByCommenter_Name("Mihai").size());
@@ -376,13 +381,20 @@ public class HelloController {
     mihaelaLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
     reactionRepository.save(mihaelaLoveValentinaComment1CalinPost1);
 
+    Reaction razvanLoveCalinComment1CalinPost2 = new Reaction();
+    razvanLoveCalinComment1CalinPost2.setUuid(4);
+    razvanLoveCalinComment1CalinPost2.setType(loveReactionType);
+    razvanLoveCalinComment1CalinPost2.setReacter(razvan);
+    razvanLoveCalinComment1CalinPost2.setComment(calinComment1CalinPost2);
+    reactionRepository.save(razvanLoveCalinComment1CalinPost2);
+
     log.info("Found Reactions of type 'Love': " + reactionRepository.findByType_Name("Love").size());
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
     timeSetupService.setupTime();
 
     Comment calinReplyVladucuComment1CalinPost2 = new Comment();
-    calinReplyVladucuComment1CalinPost2.setUuid(6);
+    calinReplyVladucuComment1CalinPost2.setUuid(7);
     calinReplyVladucuComment1CalinPost2.setCommenter(calin);
     calinReplyVladucuComment1CalinPost2
         .setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 9)));
@@ -391,7 +403,7 @@ public class HelloController {
     commentRepository.save(vladucuComment1CalinPost2);
 
     Comment emilianReplyStefanComment1CalinPost2 = new Comment();
-    emilianReplyStefanComment1CalinPost2.setUuid(7);
+    emilianReplyStefanComment1CalinPost2.setUuid(8);
     emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
     emilianReplyStefanComment1CalinPost2
         .setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 10)));
