@@ -30,6 +30,13 @@ DETACH DELETE n
 1. _Delete schema_  
 CALL apoc.schema.assert({},{}) 
 
+**GRAph Style Sheet customization**
+1. _Export GRASS file_  
+:style
+
+1. _Import GRASS file_  
+Drag and drop the one in:
+
 **Database export**  
 Change 'file' to a locally writable file.
 
