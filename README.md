@@ -53,21 +53,21 @@ MATCH (n:User)-[:HAS_CREDENTIALS]-(c)
 WHERE n.name='Calin'  
 RETURN n, c
 
-1. _Match all users_  
+1. _Retrieving all users_  
 MATCH (n:User)  
 RETURN n
 
-1. _Get Calin's friends_  
+1. _Retrieve Calin's friends_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 WHERE n.name = 'Calin'  
 RETURN n, friend
 
-1. _Get all friendships once_  
+1. _Retrieve all friendship pairs once_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 WHERE n.uuid > friend.uuid  
 RETURN n, friend
 
-1. _Get friendships lists_  
+1. _Retrieve friendships lists_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
 RETURN n, collect(friend.name), count(friend) AS numberOfFriends  
 ORDER BY numberOfFriends DESC
@@ -98,14 +98,14 @@ MATCH (n:User)<-[:POSTED_BY]-(p:Post)<-[like:LIKES_POST]-(liker:User)
 WHERE n.name = 'Calin' AND n.uuid <> liker.uuid  
 RETURN n.name, p.content, like.timestamp, liker.name
 
-1. _Match comments on Calin's posts_  
+1. _Matching comments on Calin's posts_  
 MATCH (n:User)  
 WHERE n.name = 'Calin'  
 WITH n  
 MATCH (commenter:User)-[:COMMENTED]-(c:Comment)-[:ON_POST]->(p:Post)-[:POSTED_BY]->(n)  
 RETURN n, p, c, commenter
 
-1. _Match all the way to reactions_   
+1. _Now match all the way to reactions_   
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
@@ -133,7 +133,7 @@ OPTIONAL MATCH (comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:OF_TYPE]->(reactio
 (reaction)<-[:REACTED]-(reacter:User)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter
 
-1. _Match all social data related to 'Calin'_  
+1. _Finally match all social data related to 'Calin'_  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
@@ -143,7 +143,7 @@ OPTIONAL MATCH (reaction)<-[:REACTED]-(reacter:User)
 OPTIONAL MATCH (replier:User)-[:COMMENTED]->(reply:Comment)-[:REPLIED_TO]->(comment)  
 RETURN user, post, comment, commenter, reaction, reactionType, reacter, reply, replier
 
-1. _Where do Calin's friends work?_  
+1. _But where do Calin's friends work?_  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
@@ -171,7 +171,7 @@ WITH firstHour + collect(h) as dayList
 UNWIND dayList as day  
 RETURN day
 
-1. _Get a sequence of days including days:_  
+1. _Get a sequence of hours including corresponding days:_  
 MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
 WHERE firstHour.uuid = '2019031522'  
 WITH firstHour + collect(h) as hourList  
