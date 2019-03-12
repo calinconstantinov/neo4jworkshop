@@ -30,7 +30,19 @@ DETACH DELETE n
 1. _Delete schema_  
 CALL apoc.schema.assert({},{}) 
 
-**Sample Queries**
+**Database export**  
+Change 'file' to a locally writable file.
+
+1. _Export CSV_  
+CALL apoc.export.csv.all('file', {}) 
+
+1. _Export Cypher_  
+CALL apoc.export.cypher.all('file', {format:'plain'}) 
+
+1. _Export GraphML_  
+CALL apoc.export.graphml.all('file', {useTypes:true}) 
+
+**Sample queries**
 1. _Retrieve a user_  
 MATCH (n:User)  
 WHERE n.name='Calin'  
