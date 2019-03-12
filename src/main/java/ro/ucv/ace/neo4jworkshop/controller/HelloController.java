@@ -6,7 +6,6 @@ import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.*;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
@@ -59,7 +58,7 @@ public class HelloController {
   private HourRepository hourRepository;
 
   @GetMapping
-  public String hello(@RequestParam(value = "name") String name) {
+  public String hello() {
     helperNeo4jRepository.deleteGraph();
 
     //this would be a another way of cleaning the database.
@@ -394,12 +393,13 @@ public class HelloController {
     Comment emilianReplyStefanComment1CalinPost2 = new Comment();
     emilianReplyStefanComment1CalinPost2.setUuid(7);
     emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
-    emilianReplyStefanComment1CalinPost2.setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 10)));
+    emilianReplyStefanComment1CalinPost2
+        .setHour(hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 10)));
     emilianReplyStefanComment1CalinPost2.setContent("That would've sucked haha");
     stefanComment1CalinPost2.addReply(emilianReplyStefanComment1CalinPost2);
     commentRepository.save(emilianReplyStefanComment1CalinPost2);
 
-    return "Hello " + name + "!";
+    return "Done!";
   }
 
 }
