@@ -9,6 +9,10 @@ docker run -e NEO4J_dbms_security_procedures_unrestricted=apoc.\\\* -e NEO4J_apo
 1. _GraphML import_  
 CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true})
 
+1. _Cypher import (schema)_  
+Copy the one in: 
+https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/schema.cyp
+
 1. _Schema: Constraints_  
 CALL db.constraints
 
@@ -199,13 +203,15 @@ RETURN c2 as company, count(DISTINCT u2) as friendsOfEmployees
 ORDER BY friendsOfEmployees DESC
 
 1. _Computing Post Power_  
+   1. _Adding specific Post Power node_  
 MATCH (post:Post)  
 WITH collect(post) as posts  
 FOREACH (post in posts |  
 CREATE (pP:PostPower {postPower: 0})  
 MERGE (pP)<-[:HAS_POWER]-(post))
 
-   MATCH (post:Post)-[:POSTED_BY]->(poster:User)  
+   1. _Computing and attaching Post Power value_  
+MATCH (post:Post)-[:POSTED_BY]->(poster:User)  
 WITH post, poster  
 OPTIONAL MATCH (post)<-[like:LIKES_POST]-(liker:User)  
 WHERE poster.uuid <> liker.uuid  
