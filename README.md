@@ -1,4 +1,4 @@
-# neo4jworkshop
+# Neo4j Workshop
 
 Spring Boot Spring Data Java Neo4j Workshop
 
