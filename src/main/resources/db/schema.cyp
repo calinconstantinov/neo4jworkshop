@@ -1,0 +1,13 @@
+CREATE INDEX ON :`User`(`name`);
+CREATE CONSTRAINT ON (node:`User`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`ReactionType`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Company`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Reaction`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Post`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Year`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Hour`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Comment`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Day`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`LIKES_POST`) ASSERT node.`relationshipId` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Credentials`) ASSERT node.`uuid` IS UNIQUE;
+CREATE CONSTRAINT ON (node:`Month`) ASSERT node.`uuid` IS UNIQUE;

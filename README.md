@@ -11,6 +11,7 @@ https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/ma
 **Database setup**
 1. _GraphML import_  
 CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true})
+
 1. _Schema: Constraints_  
 CALL db.constraints
 
@@ -43,7 +44,10 @@ Change 'file' to a locally writable file.
 1. _Export CSV_  
 CALL apoc.export.csv.all('file', {}) 
 
-1. _Export Cypher_  
+1. _Export Cypher Schema_
+CALL apoc.export.cypher.schema('file', {format:'plain'}) 
+
+1. _Export ALL Cypher_  
 CALL apoc.export.cypher.all('file', {format:'plain'}) 
 
 1. _Export GraphML_  
@@ -221,7 +225,7 @@ SET pp.postPower = postPower
 RETURN posterName, post.content, likes, comments, reactions, replies, postPower
 ORDER BY postPower DESC
 
-3. _BFFs <3_  
+1. _BFFs <3_  
 MATCH (user:User)  
 WHERE user.name = 'Calin'  
 WITH user  
