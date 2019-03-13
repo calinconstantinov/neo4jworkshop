@@ -44,7 +44,7 @@ Change 'file' to a locally writable file.
 1. _Export CSV_  
 CALL apoc.export.csv.all('file', {}) 
 
-1. _Export Cypher Schema_
+1. _Export Cypher Schema_   
 CALL apoc.export.cypher.schema('file', {format:'plain'}) 
 
 1. _Export ALL Cypher_  
