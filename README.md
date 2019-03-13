@@ -227,7 +227,12 @@ WHERE user.name = 'Calin'
 WITH user  
 MATCH (user)-[:FRIENDS_WITH]-(friend)  
 WITH user, friend  
-OPTIONAL MATCH (user)<-[:POSTED_BY]-(post:Post)  
-WITH user, friend, post  
-MATCH (friend)-[l:LIKES_POST]-(post)  
-RETURN user, friend, count(l) as likes  
+OPTIONAL MATCH (user)<-[:POSTED_BY]-(post:Post)<-[l:LIKES_POST]-(friend)
+WITH user, friend, count(l) as likes  
+OPTIONAL MATCH (user)-[:COMMENTED]->(comment:Comment)<-[:AT_COMMENT]-(reaction:Reaction)-[:REACTED]-(friend)  
+WITH user, friend, likes, count(reaction) as reactions  
+OPTIONAL MATCH (user)<-[:POSTED_BY]-(post:Post)<-[:ON_POST]-(comment:Comment)<-[:COMMENTED]-(friend)  
+WITH user, friend, likes, reactions, count(comment) as comments, reactions + 2 * likes + 3 * count(comment) as friendshipPower  
+WHERE friendshipPower <> 0  
+RETURN friend.name, likes, reactions, comments, friendshipPower  
+ORDER BY friendshipPower DESC

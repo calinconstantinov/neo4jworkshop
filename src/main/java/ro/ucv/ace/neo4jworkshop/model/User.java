@@ -33,6 +33,7 @@ public class User {
   @Relationship(type = "LIKES_POST")
   private Set<Like> postLikes = new LinkedHashSet<>();
 
+  @Index
   private String name;
 
   public void addFriend(User... oneOrMoreFriends) {
