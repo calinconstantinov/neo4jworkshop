@@ -1,5 +1,7 @@
 # Neo4j Workshop
 
+https://www.dropbox.com/s/7y1b8reujvr2ys0/Neo4j_BigDataRo_Workshop.pdf?dl=0
+
 Spring Boot Spring Data Java Neo4j Workshop
 
 **Start a local container**  
