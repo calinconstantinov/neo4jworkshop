@@ -1,10 +1,5 @@
 # Neo4j Workshop
 
-https://www.dropbox.com/s/7y1b8reujvr2ys0/Neo4j_BigDataRo_Workshop.pdf?dl=0
-
-
-match (n)-[:FRIENDS_WITH]-(m) with n, count(m) as noOfFriends WHERE noOfFriends > 4 RETURN n, noOfFriends ORDER BY noOfFriends DESC
-
 Spring Boot Spring Data Java Neo4j Workshop
 
 **Start a local container**  
