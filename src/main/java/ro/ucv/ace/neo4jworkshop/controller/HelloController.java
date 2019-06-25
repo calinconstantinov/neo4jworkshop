@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ro.ucv.ace.neo4jworkshop.model.*;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
+import ro.ucv.ace.neo4jworkshop.model.time.Day;
 import ro.ucv.ace.neo4jworkshop.repository.*;
 import ro.ucv.ace.neo4jworkshop.service.ExternalIdBuilderService;
 import ro.ucv.ace.neo4jworkshop.service.TimeSetupService;
@@ -53,6 +54,9 @@ public class HelloController {
 
   @Autowired
   private ExternalIdBuilderService externalIdBuilderService;
+
+  @Autowired
+  private DayRepository dayRepository;
 
   @Autowired
   private HourRepository hourRepository;
@@ -392,6 +396,8 @@ public class HelloController {
     log.info("Found Reactions for Commet with UUID '1': " + reactionRepository.findByComment_Uuid(1).size());
 
     timeSetupService.setupTime();
+    Day day = dayRepository.findByUuid(externalIdBuilderService.buildDayExternalId(2019, 3, 15));
+    log.info("Day " + day.getUuid() + " has " + day.getHours().size() + " Hours");
 
     Comment calinReplyVladucuComment1CalinPost2 = new Comment();
     calinReplyVladucuComment1CalinPost2.setUuid(7);

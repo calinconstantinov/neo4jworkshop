@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -19,10 +21,10 @@ public class Month {
 
   @EqualsAndHashCode.Include
   @Index(unique = true)
-  private Integer uuid;
+  private String uuid;
 
   @Relationship(type = "HAS_DAY")
-  private Day day;
+  private List<Day> days;
 
   private Integer month;
 }

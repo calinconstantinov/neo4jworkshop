@@ -1,7 +1,6 @@
 package ro.ucv.ace.neo4jworkshop.service;
 
 import org.neo4j.ogm.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -9,8 +8,11 @@ import java.util.Collections;
 @Service
 public class TimeSetupService {
 
-  @Autowired
-  private Session session;
+  private final Session session;
+
+  public TimeSetupService(Session session) {
+    this.session = session;
+  }
 
   //inspired from: https://markhneedham.com/blog/2014/04/19/neo4j-cypher-creating-a-time-tree-down-to-the-day/
   public void setupTime() {

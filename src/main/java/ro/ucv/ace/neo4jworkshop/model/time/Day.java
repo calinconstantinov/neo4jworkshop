@@ -8,6 +8,8 @@ import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -19,10 +21,10 @@ public class Day {
 
   @EqualsAndHashCode.Include
   @Index(unique = true)
-  private Integer uuid;
+  private String uuid;
 
   @Relationship(type = "HAS_HOUR")
-  private Hour hour;
+  private List<Hour> hours;
 
   @Relationship(type = "NEXT_DAY")
   private Day nextDay;
