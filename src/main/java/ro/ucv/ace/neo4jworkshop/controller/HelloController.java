@@ -1,6 +1,5 @@
 package ro.ucv.ace.neo4jworkshop.controller;
 
-import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +14,8 @@ import ro.ucv.ace.neo4jworkshop.model.time.Day;
 import ro.ucv.ace.neo4jworkshop.repository.*;
 import ro.ucv.ace.neo4jworkshop.service.TimeService;
 import ro.ucv.ace.neo4jworkshop.service.TimeSetupService;
+
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -249,22 +250,22 @@ public class HelloController {
         db.setName("Deutsche Bank");
         companyRepository.save(db);
 
-        endava.setEmployees(Sets.newHashSet(calin, emilian, adelina, theodora, andra));
+        endava.setEmployees(Set.of(calin, emilian, adelina, theodora, andra));
         companyRepository.save(endava);
 
-        iquest.setEmployees(Sets.newHashSet(mihai, vladucu));
+        iquest.setEmployees(Set.of(mihai, vladucu));
         companyRepository.save(iquest);
 
-        bigdataro.setEmployees(Sets.newHashSet(valentina, felix));
+        bigdataro.setEmployees(Set.of(valentina, felix));
         companyRepository.save(bigdataro);
 
-        ucv.setEmployees(Sets.newHashSet(stefan));
+        ucv.setEmployees(Set.of(stefan));
         companyRepository.save(ucv);
 
-        netrom.setEmployees(Sets.newHashSet(mihaela));
+        netrom.setEmployees(Set.of(mihaela));
         companyRepository.save(netrom);
 
-        db.setEmployees(Sets.newHashSet(razvan));
+        db.setEmployees(Set.of(razvan));
         companyRepository.save(db);
 
         log.info("Found Companies related to Company with name 'Endava': {}",
@@ -312,7 +313,7 @@ public class HelloController {
         valentinaComment1CalinPost1.setUuid(1);
         valentinaComment1CalinPost1.setCommenter(valentina);
         valentinaComment1CalinPost1.setContent("You're so cool!");
-        calinPost1.setComments(Sets.newHashSet(valentinaComment1CalinPost1));
+        calinPost1.setComments(Set.of(valentinaComment1CalinPost1));
         postRepository.save(calinPost1);
 
         Comment mihaiComment1CalinPost1 = new Comment();
@@ -340,7 +341,7 @@ public class HelloController {
         calinComment1CalinPost2.setCommenter(calin);
         calinComment1CalinPost2.setContent("Glad you could make it!");
 
-        calinPost2.setComments(Sets.newHashSet(
+        calinPost2.setComments(Set.of(
                 mihaiComment1CalinPost1, vladucuComment1CalinPost2, mihaiComment2CalinPost1,
                 stefanComment1CalinPost2, calinComment1CalinPost2
         ));
