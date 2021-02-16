@@ -18,26 +18,26 @@ import java.util.Set;
 @NodeEntity
 public class Comment {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    @Setter(AccessLevel.NONE)
+    private Long id;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
+    @EqualsAndHashCode.Include
+    @Index(unique = true)
+    private Integer uuid;
 
-  @Relationship(type = "COMMENTED", direction = Relationship.INCOMING)
-  private User commenter;
+    @Relationship(type = "COMMENTED", direction = Relationship.INCOMING)
+    private User commenter;
 
-  @Setter(AccessLevel.NONE)
-  @Relationship(type = "REPLIED_TO", direction = Relationship.INCOMING)
-  private Set<Comment> replies = new LinkedHashSet<>();
+    @Setter(AccessLevel.NONE)
+    @Relationship(type = "REPLIED_TO", direction = Relationship.INCOMING)
+    private Set<Comment> replies = new LinkedHashSet<>();
 
-  @Relationship(type = "WRITTEN_AT")
-  private Hour hour;
+    @Relationship(type = "WRITTEN_AT")
+    private Hour hour;
 
-  private String content;
+    private String content;
 
-  public void addReply(Comment reply) {
-    replies.add(reply);
-  }
+    public void addReply(Comment reply) {
+        replies.add(reply);
+    }
 }

@@ -13,14 +13,14 @@ import ro.ucv.ace.neo4jworkshop.model.*;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 import ro.ucv.ace.neo4jworkshop.model.time.Day;
 import ro.ucv.ace.neo4jworkshop.repository.*;
-import ro.ucv.ace.neo4jworkshop.service.ExternalIdBuilderService;
+import ro.ucv.ace.neo4jworkshop.service.TimeService;
 import ro.ucv.ace.neo4jworkshop.service.TimeSetupService;
 
 @Slf4j
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/hello")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class HelloController {
 
     Session session;
@@ -45,7 +45,7 @@ public class HelloController {
 
     TimeSetupService timeSetupService;
 
-    ExternalIdBuilderService externalIdBuilderService;
+    TimeService timeService;
 
     DayRepository dayRepository;
 
@@ -53,7 +53,7 @@ public class HelloController {
 
     @GetMapping
     public String hello() {
-        helperNeo4jRepository.deleteGraph();
+        helperNeo4jRepository.deleteData();
 
         //this would be a another way of cleaning the database.
         //session.purgeDatabase();
@@ -393,14 +393,13 @@ public class HelloController {
                 reactionRepository.findByComment_Uuid(1).size());
 
         timeSetupService.setupTime();
-        Day day = dayRepository.findByUuid(externalIdBuilderService.buildDayExternalId(2019, 3, 15));
+        Day day = timeService.find(2019, 3, 15);
         log.info("Day {} has {} Hours", day.getUuid(), day.getHours().size());
 
         Comment calinReplyVladucuComment1CalinPost2 = new Comment();
         calinReplyVladucuComment1CalinPost2.setUuid(7);
         calinReplyVladucuComment1CalinPost2.setCommenter(calin);
-        calinReplyVladucuComment1CalinPost2.setHour(
-                hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 9)));
+        calinReplyVladucuComment1CalinPost2.setHour(timeService.find(2019, 3, 16, 9));
         calinReplyVladucuComment1CalinPost2.setContent("Thanks! <3");
         vladucuComment1CalinPost2.addReply(calinReplyVladucuComment1CalinPost2);
         commentRepository.save(vladucuComment1CalinPost2);
@@ -408,8 +407,7 @@ public class HelloController {
         Comment emilianReplyStefanComment1CalinPost2 = new Comment();
         emilianReplyStefanComment1CalinPost2.setUuid(8);
         emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
-        emilianReplyStefanComment1CalinPost2.setHour(
-                hourRepository.findByUuid(externalIdBuilderService.buildHourExternalId(2019, 3, 16, 10)));
+        emilianReplyStefanComment1CalinPost2.setHour(timeService.find(2019, 3, 16, 10));
         emilianReplyStefanComment1CalinPost2.setContent("That would've sucked haha");
         stefanComment1CalinPost2.addReply(emilianReplyStefanComment1CalinPost2);
         commentRepository.save(emilianReplyStefanComment1CalinPost2);

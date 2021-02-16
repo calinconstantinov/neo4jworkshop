@@ -5,5 +5,5 @@ import ro.ucv.ace.neo4jworkshop.model.time.Hour;
 
 public interface HourRepository extends Neo4jRepository<Hour, Long> {
 
-  Hour findByUuid(String uuid);
+    Hour findByUuid(String uuid);
 }

@@ -5,4 +5,5 @@ import ro.ucv.ace.neo4jworkshop.model.time.Month;
 
 public interface MonthRepository extends Neo4jRepository<Month, Long> {
 
+    Month findByUuid(String uuid);
 }

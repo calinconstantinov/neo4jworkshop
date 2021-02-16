@@ -1,28 +1,23 @@
 package ro.ucv.ace.neo4jworkshop.model.time;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import ro.ucv.ace.neo4jworkshop.model.GraphEntity;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Hour {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Hour extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    @Index
+    Long value;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private String uuid;
-
-  @Relationship(type = "NEXT_HOUR")
-  private Hour nextHour;
-
-  private Integer hour;
+    @Relationship(type = "NEXT_HOUR")
+    Hour nextHour;
 }

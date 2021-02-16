@@ -1,30 +1,28 @@
 package ro.ucv.ace.neo4jworkshop.model.time;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import ro.ucv.ace.neo4jworkshop.model.GraphEntity;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Month {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Month extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    @Index
+    Long value;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private String uuid;
+    @Relationship(type = "HAS_DAY")
+    Set<Day> days;
 
-  @Relationship(type = "HAS_DAY")
-  private List<Day> days;
-
-  private Integer month;
+    @Relationship(type = "NEXT_MONTH")
+    Month nextMonth;
 }
