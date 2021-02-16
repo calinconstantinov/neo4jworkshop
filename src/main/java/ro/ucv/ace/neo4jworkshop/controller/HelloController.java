@@ -48,10 +48,6 @@ public class HelloController {
 
     TimeService timeService;
 
-    DayRepository dayRepository;
-
-    HourRepository hourRepository;
-
     @GetMapping
     public String hello() {
         helperNeo4jRepository.deleteData();
@@ -64,7 +60,9 @@ public class HelloController {
         calin.setName("Calin");
         userRepository.save(calin);
 
-        log.info("Found user with UUID '1', having Name: {}", userRepository.findByUuid(1).getName());
+        log.info("Found user with UUID '1', having Name: {}",
+                userRepository.findByUuid(1)
+                        .getName());
         log.info("Found user with Name 'Calin', having UUID: {}", userRepository.findByName("Calin").getUuid());
 
         Credentials calinCredentials = new Credentials();
@@ -284,7 +282,9 @@ public class HelloController {
         postRepository.save(calinPost2);
 
         log.info("Number of Posts written by User with Name 'Calin': {}",
-                postRepository.findByPoster_Name("Calin").size());
+                postRepository
+                        .findByPoster_Name("Calin")
+                        .size());
 
         Like calinLikesCalinPost1 = new Like();
         calinLikesCalinPost1.setUser(calin);
