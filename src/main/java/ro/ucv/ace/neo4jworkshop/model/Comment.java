@@ -18,10 +18,10 @@ import java.util.Set;
 @NodeEntity
 public class Comment {
 
+    @EqualsAndHashCode.Include
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @EqualsAndHashCode.Include
     @Index(unique = true)
     private Integer uuid;
 

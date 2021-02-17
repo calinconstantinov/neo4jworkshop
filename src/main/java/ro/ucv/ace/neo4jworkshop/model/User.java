@@ -17,16 +17,17 @@ import java.util.*;
 @NodeEntity
 public class User {
 
+  @EqualsAndHashCode.Include
   @Setter(AccessLevel.NONE)
   private Long id;
 
-  @EqualsAndHashCode.Include
   @Index(unique = true)
   private Integer uuid;
 
   @Relationship(type = "HAS_CREDENTIALS")
   private Credentials credentials;
 
+  //not how it should be done
   @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
   private Set<User> friends = new LinkedHashSet<>();
 
