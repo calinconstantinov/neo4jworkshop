@@ -56,12 +56,12 @@ public class WorkshopController {
         //session.purgeDatabase();
 
         User calin = new User();
-        calin.setUuid(1);
+        calin.setUuid("1");
         calin.setName("Calin");
         userRepository.save(calin);
 
         log.info("Found user with Uuid '1', having Name: {}",
-                userRepository.findByUuid(1)
+                userRepository.findByUuid("1")
                         .getName());
         log.info("Found user with Name 'Calin', having Uuid: {}",
                 userRepository
@@ -333,32 +333,32 @@ public class WorkshopController {
         reactionTypeRepository.save(hahaReactionType);
 
         Reaction emilianLoveValentinaComment1CalinPost1 = new Reaction();
-        emilianLoveValentinaComment1CalinPost1.setType(loveReactionType);
-        emilianLoveValentinaComment1CalinPost1.setReacter(emilian);
+        emilianLoveValentinaComment1CalinPost1.setReactionType(loveReactionType);
+        emilianLoveValentinaComment1CalinPost1.setReactingUser(emilian);
         emilianLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
         reactionRepository.save(emilianLoveValentinaComment1CalinPost1);
 
         Reaction calinHahaStefanComment1CalinPost2 = new Reaction();
-        calinHahaStefanComment1CalinPost2.setType(hahaReactionType);
-        calinHahaStefanComment1CalinPost2.setReacter(calin);
+        calinHahaStefanComment1CalinPost2.setReactionType(hahaReactionType);
+        calinHahaStefanComment1CalinPost2.setReactingUser(calin);
         calinHahaStefanComment1CalinPost2.setComment(stefanComment1CalinPost2);
         reactionRepository.save(calinHahaStefanComment1CalinPost2);
 
         Reaction mihaelaLoveValentinaComment1CalinPost1 = new Reaction();
-        mihaelaLoveValentinaComment1CalinPost1.setType(loveReactionType);
-        mihaelaLoveValentinaComment1CalinPost1.setReacter(mihaela);
+        mihaelaLoveValentinaComment1CalinPost1.setReactionType(loveReactionType);
+        mihaelaLoveValentinaComment1CalinPost1.setReactingUser(mihaela);
         mihaelaLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
         reactionRepository.save(mihaelaLoveValentinaComment1CalinPost1);
 
         Reaction razvanLoveCalinComment1CalinPost2 = new Reaction();
-        razvanLoveCalinComment1CalinPost2.setType(loveReactionType);
-        razvanLoveCalinComment1CalinPost2.setReacter(razvan);
+        razvanLoveCalinComment1CalinPost2.setReactionType(loveReactionType);
+        razvanLoveCalinComment1CalinPost2.setReactingUser(razvan);
         razvanLoveCalinComment1CalinPost2.setComment(calinComment1CalinPost2);
         reactionRepository.save(razvanLoveCalinComment1CalinPost2);
 
         log.info("Found Reactions of type 'LOVE': {}",
                 reactionRepository
-                        .findByType_Name("LOVE")
+                        .findByReactionType_Name("LOVE")
                         .size());
         log.info("Found Reactions for Comment with Uuid '11': {}",
                 reactionRepository

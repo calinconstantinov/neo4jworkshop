@@ -1,48 +1,43 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import ro.ucv.ace.neo4jworkshop.model.relationship.Like;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class User {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class User extends GraphEntity {
 
-  @EqualsAndHashCode.Include
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    @Index
+    String name;
 
-  @Index(unique = true)
-  private Integer uuid;
+    @Relationship(type = "HAS_CREDENTIALS")
+    Credentials credentials;
 
-  @Relationship(type = "HAS_CREDENTIALS")
-  private Credentials credentials;
+    //not how it should be done
+    @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
+    Set<User> friends = new LinkedHashSet<>();
 
-  //not how it should be done
-  @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
-  private Set<User> friends = new LinkedHashSet<>();
+    @Relationship(type = "LIKES_POST")
+    Set<Like> postLikes = new LinkedHashSet<>();
 
-  @Relationship(type = "LIKES_POST")
-  private Set<Like> postLikes = new LinkedHashSet<>();
+    public void addFriend(User... oneOrMoreFriends) {
+        friends.addAll(Arrays.asList(oneOrMoreFriends));
+        Arrays.stream(oneOrMoreFriends).forEach(u -> u.getFriends().add(this));
+    }
 
-  @Index
-  private String name;
-
-  public void addFriend(User... oneOrMoreFriends) {
-    friends.addAll(Arrays.asList(oneOrMoreFriends));
-    Arrays.stream(oneOrMoreFriends).forEach(u -> u.getFriends().add(this));
-  }
-
-  public void likePost(Like... oneOreMorePostLikes) {
-    postLikes.addAll(Arrays.asList(oneOreMorePostLikes));
-  }
+    public void likePost(Like... oneOreMorePostLikes) {
+        postLikes.addAll(Arrays.asList(oneOreMorePostLikes));
+    }
 }

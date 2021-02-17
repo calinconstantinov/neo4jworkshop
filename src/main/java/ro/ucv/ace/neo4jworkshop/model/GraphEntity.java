@@ -17,6 +17,10 @@ import java.time.Instant;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class GraphEntity {
 
+    @Index(unique = true)
+    @EqualsAndHashCode.Include
+    String uuid;
+
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
@@ -29,8 +33,4 @@ public abstract class GraphEntity {
     @LastModifiedDate
     @Setter(AccessLevel.NONE)
     Instant lastModifiedDate;
-
-    @Index(unique = true)
-    @EqualsAndHashCode.Include
-    String uuid;
 }

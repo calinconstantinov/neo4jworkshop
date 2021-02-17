@@ -1,24 +1,18 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class ReactionType {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class ReactionType extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
-
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
-
-  private String name;
+    @Index(unique = true)
+    String name;
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 @Repository
 public interface ReactionRepository extends Neo4jRepository<Reaction, Long> {
 
-    Set<Reaction> findByType_Name(String typeName);
+    Set<Reaction> findByReactionType_Name(String reactionTypeName);
 
     Set<Reaction> findByComment_Uuid(Integer commendUuid);
 }

@@ -1,34 +1,26 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.neo4j.ogm.annotation.Index;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Reaction {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Reaction extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    Long timestamp;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
+    @Relationship(type = "AT_COMMENT")
+    Comment comment;
 
-  @Relationship(type = "REACTED", direction = Relationship.INCOMING)
-  private User reacter;
+    @Relationship(type = "REACTED", direction = Relationship.INCOMING)
+    User reactingUser;
 
-  @Relationship(type = "OF_TYPE")
-  private ReactionType type;
-
-  @Relationship(type = "AT_COMMENT")
-  private Comment comment;
-
-  private Long timestamp;
+    @Relationship(type = "OF_TYPE")
+    ReactionType reactionType;
 }
