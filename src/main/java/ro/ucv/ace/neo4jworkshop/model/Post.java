@@ -1,10 +1,7 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.neo4j.ogm.annotation.Index;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
@@ -12,22 +9,17 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Post {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Post extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    String content;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
+    @Relationship(type = "POSTED_BY")
+    User poster;
 
-  @Relationship(type = "POSTED_BY")
-  private User poster;
-
-  @Relationship(type = "ON_POST", direction = Relationship.INCOMING)
-  private Set<Comment> comments;
-
-  private String content;
+    @Relationship(type = "ON_POST", direction = Relationship.INCOMING)
+    Set<Comment> comments;
 }

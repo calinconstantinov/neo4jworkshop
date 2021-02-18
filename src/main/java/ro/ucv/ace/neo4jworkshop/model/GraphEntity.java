@@ -18,11 +18,11 @@ import java.time.Instant;
 public abstract class GraphEntity {
 
     @Index(unique = true)
-    @EqualsAndHashCode.Include
     String uuid;
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @Setter(AccessLevel.NONE)
     Long id;
 

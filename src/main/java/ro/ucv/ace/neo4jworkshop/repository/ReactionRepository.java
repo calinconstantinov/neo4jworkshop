@@ -11,5 +11,5 @@ public interface ReactionRepository extends Neo4jRepository<Reaction, Long> {
 
     Set<Reaction> findByReactionType_Name(String reactionTypeName);
 
-    Set<Reaction> findByComment_Uuid(Integer commendUuid);
+    Set<Reaction> findByComment_Uuid(String commendUuid);
 }

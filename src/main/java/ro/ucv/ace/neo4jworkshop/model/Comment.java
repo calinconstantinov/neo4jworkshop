@@ -1,10 +1,7 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.neo4j.ogm.annotation.Index;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import ro.ucv.ace.neo4jworkshop.model.time.Hour;
@@ -14,28 +11,23 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Comment {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Comment extends GraphEntity {
 
-    @EqualsAndHashCode.Include
-    @Setter(AccessLevel.NONE)
-    private Long id;
+    String content;
 
-    @Index(unique = true)
-    private Integer uuid;
+    @Relationship(type = "WRITTEN_AT")
+    Hour hour;
 
     @Relationship(type = "COMMENTED", direction = Relationship.INCOMING)
-    private User commenter;
+    User commenter;
 
     @Setter(AccessLevel.NONE)
     @Relationship(type = "REPLIED_TO", direction = Relationship.INCOMING)
-    private Set<Comment> replies = new LinkedHashSet<>();
-
-    @Relationship(type = "WRITTEN_AT")
-    private Hour hour;
-
-    private String content;
+    Set<Comment> replies = new LinkedHashSet<>();
 
     public void addReply(Comment reply) {
         replies.add(reply);

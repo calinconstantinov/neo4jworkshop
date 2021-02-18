@@ -1,7 +1,7 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
 import lombok.*;
-import org.neo4j.ogm.annotation.Index;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
@@ -10,21 +10,14 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Company {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Company extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    String name;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
-
-  @Relationship(type = "EMPLOYED")
-  private Set<User> employees = new LinkedHashSet<>();
-
-  @ToString.Include
-  private String name;
+    @Relationship(type = "EMPLOYED")
+    Set<User> employees = new LinkedHashSet<>();
 }

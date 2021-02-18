@@ -1,30 +1,24 @@
 package ro.ucv.ace.neo4jworkshop.model;
 
 import lombok.*;
-import org.neo4j.ogm.annotation.Index;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @Getter
 @Setter
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NodeEntity
-public class Credentials {
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Credentials extends GraphEntity {
 
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    String email;
 
-  @EqualsAndHashCode.Include
-  @Index(unique = true)
-  private Integer uuid;
+    @ToString.Exclude
+    String password;
 
-  @ToString.Include
-  private String email;
-
-  @ToString.Include
-  private String password;
-
-  @Relationship(type = "HAS_CREDENTIALS", direction = Relationship.INCOMING)
-  private User user;
+    @ToString.Exclude
+    @Relationship(type = "HAS_CREDENTIALS", direction = Relationship.INCOMING)
+    User user;
 }

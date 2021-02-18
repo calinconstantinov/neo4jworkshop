@@ -287,7 +287,7 @@ public class WorkshopController {
                         .size());
 
         Comment valentinaComment1CalinPost1 = new Comment();
-        valentinaComment1CalinPost1.setUuid(11);
+        valentinaComment1CalinPost1.setUuid("11");
         valentinaComment1CalinPost1.setCommenter(valentina);
         valentinaComment1CalinPost1.setContent("You're so cool!");
         calinPost1.setComments(Set.of(valentinaComment1CalinPost1));
@@ -296,22 +296,27 @@ public class WorkshopController {
         Comment mihaiComment1CalinPost1 = new Comment();
         mihaiComment1CalinPost1.setCommenter(mihai);
         mihaiComment1CalinPost1.setContent("We're so fortunate to be part of this!");
+        commentRepository.save(mihaiComment1CalinPost1);
 
         Comment vladucuComment1CalinPost2 = new Comment();
         vladucuComment1CalinPost2.setCommenter(vladucu);
         vladucuComment1CalinPost2.setContent("Best workshop EVER!");
+        commentRepository.save(vladucuComment1CalinPost2);
 
         Comment mihaiComment2CalinPost1 = new Comment();
         mihaiComment2CalinPost1.setCommenter(mihai);
         mihaiComment2CalinPost1.setContent("Mind blowing !!!11oneone11");
+        commentRepository.save(mihaiComment2CalinPost1);
 
         Comment stefanComment1CalinPost2 = new Comment();
         stefanComment1CalinPost2.setCommenter(stefan);
         stefanComment1CalinPost2.setContent("To think I almost missed it...");
+        commentRepository.save(stefanComment1CalinPost2);
 
         Comment calinComment1CalinPost2 = new Comment();
         calinComment1CalinPost2.setCommenter(calin);
         calinComment1CalinPost2.setContent("Glad you could make it!");
+        commentRepository.save(calinComment1CalinPost2);
 
         calinPost2.setComments(Set.of(
                 mihaiComment1CalinPost1, vladucuComment1CalinPost2, mihaiComment2CalinPost1,
@@ -362,7 +367,7 @@ public class WorkshopController {
                         .size());
         log.info("Found Reactions for Comment with Uuid '11': {}",
                 reactionRepository
-                        .findByComment_Uuid(11)
+                        .findByComment_Uuid("11")
                         .size());
 
         timeSetupService.setupTime();

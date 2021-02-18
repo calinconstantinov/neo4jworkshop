@@ -22,10 +22,12 @@ public class User extends GraphEntity {
     @Index
     String name;
 
+    //not how it should be done
     @Relationship(type = "HAS_CREDENTIALS")
     Credentials credentials;
 
     //not how it should be done
+    @ToString.Exclude
     @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
     Set<User> friends = new LinkedHashSet<>();
 
