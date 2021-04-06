@@ -1,9 +1,0 @@
-package ro.ucv.ace.neo4jworkshop.repository;
-
-import org.springframework.data.neo4j.repository.Neo4jRepository;
-import ro.ucv.ace.neo4jworkshop.model.time.Month;
-
-public interface MonthRepository extends Neo4jRepository<Month, Long> {
-
-    Month findByUuid(String uuid);
-}
