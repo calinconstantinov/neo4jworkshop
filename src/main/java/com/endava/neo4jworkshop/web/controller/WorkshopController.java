@@ -371,19 +371,19 @@ public class WorkshopController {
                         .size());
 
         timeSetupService.setupTime();
-        Day day = timeService.find(2019, 3, 15);
+        Day day = timeService.find(2021, 5, 15);
         log.info("Day {} has {} Hours", day.getUuid(), day.getHours().size());
 
         Comment calinReplyVladucuComment1CalinPost2 = new Comment();
         calinReplyVladucuComment1CalinPost2.setCommenter(calin);
-        calinReplyVladucuComment1CalinPost2.setHour(timeService.find(2019, 3, 16, 9));
+        calinReplyVladucuComment1CalinPost2.setHour(timeService.find(2021, 5, 16, 9));
         calinReplyVladucuComment1CalinPost2.setContent("Thanks! <3");
         vladucuComment1CalinPost2.addReply(calinReplyVladucuComment1CalinPost2);
         commentRepository.save(vladucuComment1CalinPost2);
 
         Comment emilianReplyStefanComment1CalinPost2 = new Comment();
         emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
-        emilianReplyStefanComment1CalinPost2.setHour(timeService.find(2019, 3, 16, 10));
+        emilianReplyStefanComment1CalinPost2.setHour(timeService.find(2021, 5, 16, 10));
         emilianReplyStefanComment1CalinPost2.setContent("That would've sucked haha");
         stefanComment1CalinPost2.addReply(emilianReplyStefanComment1CalinPost2);
         commentRepository.save(emilianReplyStefanComment1CalinPost2);

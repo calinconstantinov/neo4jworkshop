@@ -2,8 +2,10 @@
 
 Spring Boot Spring Data Java Neo4j Workshop
 
+— _Tested with Neo4j 4.0.11_ —
+
 **Start a local container**  
-docker run -e NEO4J_dbms_security_procedures_unrestricted=apoc.\\\* -e NEO4J_apoc_export_file_enabled=true -e NEO4J_apoc_import_file_enabled=true -e=NEO4J_AUTH=none -e=NEO4J_ACCEPT_LICENSE_AGREEMENT=yes --publish=7474:7474 --publish=7687:7687 discsports/neo4j-apoc
+docker run -p 7474:7474 -p 7687:7687 --name neo4j-apoc -e NEO4J_AUTH=neo4j/admin -e NEO4J_dbms_security_procedures_unrestricted=apoc.\\\* -e NEO4J_apoc_export_file_enabled=true -e NEO4J_apoc_import_file_enabled=true -e NEO4J_apoc_import_file_use__neo4j__config=true -e NEO4JLABS_PLUGINS=\[\"apoc\"\] neo4j:4.0.11
 
 **Database setup**
 1. _GraphML import_  
@@ -246,3 +248,11 @@ WITH user, friend, likes, reactions, count(comment) as comments, reactions + 2 *
 WHERE friendshipPower <> 0  
 RETURN friend.name, likes, reactions, comments, friendshipPower  
 ORDER BY friendshipPower DESC
+
+**Full-text indexes powered by the Apache Lucene**
+1. _Create full-text index_  
+CALL db.index.fulltext.createNodeIndex("user_names",["User"],["name"]);
+
+1. _Term query example_  
+
+1. _Fuzzy query example_  

@@ -17,14 +17,14 @@ public class TimeSetupService {
 
     public void setupTime() {
         String timeNodesCreationQuery =
-                "WITH range(2019, 2021) AS years, range(1, 12) AS months, range(0, 23) AS hours " +
+                "WITH range(2021, 2021) AS years, range(/*1, 12*/ 5, 5) AS months, range(0, 23) AS hours " +
                         "FOREACH(year IN years | " +
                         "  MERGE (y:Year {value: year, uuid: toString(year)}) " +
                         "  FOREACH(month IN months | " +
                         "    CREATE (m:Month {value: month}) " +
                         "    MERGE (y)-[:HAS_MONTH]->(m) " +
                         "    FOREACH(day IN (CASE " +
-                        "                      WHEN month IN [1, 3, 5, 7, 8, 10, 12] THEN range(1, 31) " +
+                        "                      WHEN month IN [1, 3, 5, 7, 8, 10, 12] THEN range(/*1, 31*/ 15,16) " +
                         "                      WHEN month = 2 THEN " +
                         "                        CASE " +
                         "                          WHEN year % 4 <> 0 THEN range(1,28) " +
