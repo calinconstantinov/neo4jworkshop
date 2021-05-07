@@ -12,6 +12,6 @@ public interface CompanyRepository extends GraphNodeRepository<Company> {
 
     @Query("MATCH (c:Company)-[:EMPLOYED]->(u:User)-[:FRIENDS_WITH]-(u2:User)<-[:EMPLOYED]-(c2:Company) " +
             "WHERE c.uuid <> c2.uuid AND c.name = $0 " +
-            "RETURN c2 AS company, count(DISTINCT u2) AS friendsOfEmployees ORDER BY friendsOfEmployees DESC")
+            "RETURN c2.name AS companyName, count(DISTINCT u2) AS friendsOfEmployees ORDER BY friendsOfEmployees DESC")
     List<FriendsOfEmployeesCompany> findFriendsOfEmployeesCompanies(String companyName);
 }

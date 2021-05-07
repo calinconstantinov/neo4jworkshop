@@ -1,6 +1,5 @@
 package com.endava.neo4jworkshop.queryresult;
 
-import com.endava.neo4jworkshop.model.Company;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import org.springframework.data.neo4j.annotation.QueryResult;
 @QueryResult
 public class FriendsOfEmployeesCompany {
 
-    Company company;
+    String companyName;
 
     Integer friendsOfEmployees;
 }

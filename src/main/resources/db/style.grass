@@ -21,66 +21,101 @@ node.User {
   text-color-internal: #FFFFFF;
   caption: "{name}";
 }
-node.Company {
+node.* {
   color: #F79767;
   border-color: #f36924;
   text-color-internal: #FFFFFF;
-  caption: "{name}";
+  defaultCaption: "<id>";
 }
-node.Post {
+node.Day {
   color: #57C7E3;
   border-color: #23b3d7;
-  text-color-internal: #FFFFFF;
-  caption: "{content}";
+  text-color-internal: #2A2C34;
+  caption: "{uuid}";
 }
-node.Comment {
+node.Review {
   color: #F16667;
   border-color: #eb2728;
   text-color-internal: #FFFFFF;
-  caption: "{content}";
+  caption: "{date}";
 }
-node.ReactionType {
+node.ReviewVote {
   color: #D9C8AE;
   border-color: #c0a378;
-  text-color-internal: #604A0E;
-  caption: "{name}";
+  text-color-internal: #2A2C34;
+  caption: "{date}";
 }
-node.Reaction {
+node.Friendship {
   color: #8DCC93;
   border-color: #5db665;
-  text-color-internal: #604A0E;
-  caption: "{uuid}";
+  text-color-internal: #2A2C34;
+  defaultCaption: "<id>";
 }
-node.Year {
+node.Movie {
   color: #ECB5C9;
   border-color: #da7298;
-  text-color-internal: #604A0E;
-  caption: "{year}";
+  text-color-internal: #2A2C34;
+  caption: "{title}";
 }
 node.Month {
   color: #4C8EDA;
   border-color: #2870c2;
   text-color-internal: #FFFFFF;
-  caption: "{month}";
+  caption: "{uuid}";
 }
-node.Day {
+node.Authentication {
   color: #FFC454;
   border-color: #d7a013;
-  text-color-internal: #604A0E;
-  caption: "{day}";
+  text-color-internal: #2A2C34;
+  caption: "{email}";
+  diameter: 65px;
 }
-node.Hour {
+node.Company {
   color: #DA7194;
   border-color: #cc3c6c;
   text-color-internal: #FFFFFF;
-  caption: "{hour}";
+  caption: "{name}";
 }
-node.Credentials {
+node.Post {
   color: #569480;
   border-color: #447666;
   text-color-internal: #FFFFFF;
-  caption: "{uuid}";
+  caption: "{content}";
+  diameter: 65px;
 }
-node.* {
-  defaultCaption: "<id>";
+node.Comment {
+  caption: "{content}";
+  color: #F79767;
+  border-color: #f36924;
+  text-color-internal: #FFFFFF;
+}
+node.Reaction {
+  caption: "{createdDate}";
+  color: #F16667;
+  border-color: #eb2728;
+  text-color-internal: #FFFFFF;
+}
+node.Hour {
+  caption: "{uuid}";
+  color: #8DCC93;
+  border-color: #5db665;
+  text-color-internal: #2A2C34;
+  diameter: 65px;
+}
+node.ReactionType {
+  caption: "{name}";
+  color: #ECB5C9;
+  border-color: #da7298;
+  text-color-internal: #2A2C34;
+  diameter: 80px;
+}
+node.Weekday {
+  caption: "{uuid}";
+  diameter: 80px;
+  color: #D9C8AE;
+  border-color: #c0a378;
+  text-color-internal: #2A2C34;
+}
+node.Year {
+  caption: "{uuid}";
 }

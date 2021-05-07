@@ -80,23 +80,28 @@ WHERE n.name = 'Calin'
 RETURN n, friend
 
 1. _Retrieve all friendship pairs once_  
-MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
-WHERE n.uuid > friend.uuid  
+MATCH (n:User)-[:FRIENDS_WITH]->(friend)  
+WHERE ID(n) > ID(friend)  
 RETURN n, friend
+   
+1. _Remove duplicate friendship relationships_
+MATCH (u1:User)-[friendship:FRIENDS_WITH]->(u2:User) 
+WHERE ID(u1) > ID(u2) 
+DELETE friendship
 
 1. _Retrieve friendships lists_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
-RETURN n, collect(friend.name), count(friend) AS numberOfFriends  
+RETURN n.name, collect(friend.name), count(friend) AS numberOfFriends  
 ORDER BY numberOfFriends DESC
 
-1. _Include credentials with friendships lists_  
-MATCH (c:Credentials)<-[:HAS_CREDENTIALS]-(n:User)-[:FRIENDS_WITH]-(friend)  
-RETURN n, count(friend)
+1. _Include authentication with friendships lists_  
+MATCH (a:Authentication)<-[:HAS_AUTHENTICATION]-(n:User)-[:FRIENDS_WITH]-(friend)  
+RETURN n.name, count(friend)
 
-1. _Optional matching credentials with friendships lists_  
+1. _Optional matching authentication with friendships lists_  
 MATCH (n:User)-[:FRIENDS_WITH]-(friend)  
-OPTIONAL MATCH (n)-[]-(c:Credentials)  
-RETURN c, n, count(friend)  
+OPTIONAL MATCH (n)-[]-(a:Authentication)  
+RETURN a.email, n.name, count(friend)  
 
 1. _Matching Calin's posts_  
 MATCH (n:User)  
@@ -178,19 +183,19 @@ RETURN y, m, d, h
 
 1. _Ordering time_  
 MATCH (y:Year)-[:HAS_MONTH]->(m:Month)-[:HAS_DAY]->(d:Day)-[:HAS_HOUR]->(h:Hour)   
-RETURN y.year, m.month, d.day, h.hour  
-ORDER BY y.year ASC, m.month ASC, d.day ASC, h.hour ASC
+RETURN y.uuid, m.uuid, d.uuid, h.uuid  
+ORDER BY y.uuid ASC, m.uuid ASC, d.uuid ASC, h.uuid ASC
  
 1. _Get a sequence of hours:_  
 MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
-WHERE firstHour.uuid = '2019031522'  
+WHERE firstHour.uuid = '2021051522'  
 WITH firstHour + collect(h) as dayList  
 UNWIND dayList as day  
 RETURN day
 
 1. _Get a sequence of hours including corresponding days:_  
 MATCH (firstHour:Hour)-[:NEXT_HOUR*..5]->(h)  
-WHERE firstHour.uuid = '2019031522'  
+WHERE firstHour.uuid = '2021051522'  
 WITH firstHour + collect(h) as hourList  
 UNWIND hourList as hour  
 WITH hour
@@ -201,7 +206,7 @@ RETURN day, hour
 1. _Friendship relationships between companies_  
 MATCH (c:Company)-[:EMPLOYED]->(u:User)-[:FRIENDS_WITH]-(u2:User)<-[:EMPLOYED]-(c2:Company)  
 WHERE c.uuid <> c2.uuid AND c.name = 'Endava'  
-RETURN c2 as company, count(DISTINCT u2) as friendsOfEmployees  
+RETURN c2.name as company, count(DISTINCT u2) as friendsOfEmployees  
 ORDER BY friendsOfEmployees DESC
 
 1. _Computing Post Power_  

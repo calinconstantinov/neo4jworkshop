@@ -11,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +46,6 @@ public class WorkshopController {
 
     TimeService timeService;
 
-    @Transactional
     @GetMapping
     public String hello() {
         helperNeo4jRepository.deleteData();
@@ -72,8 +70,9 @@ public class WorkshopController {
         authenticationRepository.save(calinAuthentication);
 
         log.info("Found Authentication for User with name 'Calin': {}", authenticationRepository.findByUser_Name("Calin"));
-        log.info("User 'Calin' also reflects Authentication assignment: {}", calin.getAuthentication());
+        log.info("User 'Calin' does not reflect Authentication assignment: {}", calin.getAuthentication());
         calin = userRepository.findByName("Calin");
+        log.info("User 'Calin' now does reflect Authentication assignment: {}", calin.getAuthentication());
 
         var mihai = new User();
         mihai.setName("Mihai");
@@ -248,12 +247,12 @@ public class WorkshopController {
                         .findByPoster_Name("Calin")
                         .size());
 
-        Like calinLikesCalinPost1 = new Like();
+        var calinLikesCalinPost1 = new Like();
         calinLikesCalinPost1.setUser(calin);
         calinLikesCalinPost1.setPost(calinPost1);
         calinLikesCalinPost1.setTimestamp(System.currentTimeMillis());
         calin.likePost(calinLikesCalinPost1);
-        userRepository.save(calin);
+        calin = userRepository.save(calin);
 
         Like mihaiLikesCalinPost1 = new Like();
         mihaiLikesCalinPost1.setUser(mihai);
@@ -266,7 +265,7 @@ public class WorkshopController {
         mihaiLikesCalinPost2.setTimestamp(System.currentTimeMillis());
 
         mihai.likePost(mihaiLikesCalinPost1, mihaiLikesCalinPost2);
-        userRepository.save(mihai);
+        mihai = userRepository.save(mihai);
 
         log.info("Number of Likes given by User with Name 'Mihai': {}",
                 likeRepository

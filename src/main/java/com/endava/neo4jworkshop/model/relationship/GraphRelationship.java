@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
 
 @Getter
 @Setter
@@ -14,8 +12,6 @@ import org.neo4j.ogm.annotation.Id;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class GraphRelationship {
 
-    @Id
-    @GeneratedValue
     @Setter(AccessLevel.NONE)
-    Long relationshipId;
+    Long id;
 }
