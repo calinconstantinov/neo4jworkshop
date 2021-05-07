@@ -7,11 +7,11 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class ReactionType extends GraphEntity {
+@NodeEntity
+public class ReactionType extends GraphNode {
 
     @Index(unique = true)
     String name;

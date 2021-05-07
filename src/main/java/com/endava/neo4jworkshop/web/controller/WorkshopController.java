@@ -55,7 +55,7 @@ public class WorkshopController {
         //this would be a another way of cleaning the database.
         //session.purgeDatabase();
 
-        User calin = new User();
+        var calin = new User();
         calin.setUuid("1");
         calin.setName("Calin");
         userRepository.save(calin);
@@ -68,7 +68,7 @@ public class WorkshopController {
                         .findByName("Calin")
                         .getUuid());
 
-        Credentials calinCredentials = new Credentials();
+        var calinCredentials = new Credentials();
         calinCredentials.setUser(calin);
         calinCredentials.setEmail("foo@bar.com");
         calinCredentials.setPassword("Passw0rd");

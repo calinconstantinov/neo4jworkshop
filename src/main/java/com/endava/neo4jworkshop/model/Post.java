@@ -9,11 +9,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Post extends GraphEntity {
+@NodeEntity
+public class Post extends GraphNode {
 
     String content;
 

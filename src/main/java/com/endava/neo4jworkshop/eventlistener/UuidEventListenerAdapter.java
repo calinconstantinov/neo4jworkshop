@@ -1,6 +1,7 @@
 package com.endava.neo4jworkshop.eventlistener;
 
-import com.endava.neo4jworkshop.model.GraphEntity;
+import com.endava.neo4jworkshop.model.GraphNode;
+import org.apache.commons.lang3.StringUtils;
 import org.neo4j.ogm.session.event.Event;
 import org.neo4j.ogm.session.event.EventListenerAdapter;
 import org.springframework.stereotype.Component;
@@ -8,17 +9,17 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class GenericUuidEventListenerAdapter extends EventListenerAdapter {
+public class UuidEventListenerAdapter extends EventListenerAdapter {
 
     @Override
     public void onPreSave(Event event) {
-        Object eventObject = event.getObject();
-        if (!(eventObject instanceof GraphEntity)) {
+        var eventObject = event.getObject();
+        if (!(eventObject instanceof GraphNode)) {
             return;
         }
 
-        GraphEntity entity = (GraphEntity) eventObject;
-        if (entity.getUuid() == null) {
+        var entity = (GraphNode) eventObject;
+        if (StringUtils.isEmpty(entity.getUuid())) {
             entity.setUuid(UUID.randomUUID().toString());
         }
     }

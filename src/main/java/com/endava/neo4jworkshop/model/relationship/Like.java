@@ -5,23 +5,27 @@ import com.endava.neo4jworkshop.model.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.neo4j.ogm.annotation.*;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @RelationshipEntity(type = "LIKES_POST")
-public class Like {
+public class Like extends GraphRelationship {
 
-  @Setter(AccessLevel.NONE)
-  @Id
-  @GeneratedValue
-  private Long relationshipId;
+    @ToString.Exclude
+    @StartNode
+    User user;
 
-  @StartNode
-  private User user;
+    //users can like their own posts
+    @ToString.Exclude
+    @EndNode
+    Post post;
 
-  @EndNode
-  private Post post;
-
-  private Long timestamp;
+    Long timestamp;
 }

@@ -1,21 +1,21 @@
 package com.endava.neo4jworkshop.model;
 
+import com.endava.neo4jworkshop.model.time.Hour;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
-import com.endava.neo4jworkshop.model.time.Hour;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Comment extends GraphEntity {
+@NodeEntity
+public class Comment extends GraphNode {
 
     String content;
 

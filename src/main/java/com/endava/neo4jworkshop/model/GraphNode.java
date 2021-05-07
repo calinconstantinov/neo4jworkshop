@@ -2,10 +2,10 @@ package com.endava.neo4jworkshop.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.Index;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
@@ -15,16 +15,11 @@ import java.time.Instant;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class GraphEntity {
+public abstract class GraphNode {
 
     @Index(unique = true)
-    String uuid;
-
-    @Id
-    @GeneratedValue
     @EqualsAndHashCode.Include
-    @Setter(AccessLevel.NONE)
-    Long id;
+    String uuid;
 
     @CreatedDate
     @Setter(AccessLevel.NONE)
@@ -33,4 +28,17 @@ public abstract class GraphEntity {
     @LastModifiedDate
     @Setter(AccessLevel.NONE)
     Instant lastModifiedDate;
+
+    @CreatedBy
+    @Setter(AccessLevel.NONE)
+    String createdBy;
+
+    @LastModifiedBy
+    @Setter(AccessLevel.NONE)
+    String lastModifiedBy;
+
+    //@Id
+    //@GeneratedValue
+    @Setter(AccessLevel.NONE)
+    Long id;
 }

@@ -1,11 +1,11 @@
 package com.endava.neo4jworkshop.model;
 
+import com.endava.neo4jworkshop.model.relationship.Like;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
-import com.endava.neo4jworkshop.model.relationship.Like;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -13,11 +13,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class User extends GraphEntity {
+@NodeEntity
+public class User extends GraphNode {
 
     @Index
     String name;

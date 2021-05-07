@@ -1,6 +1,6 @@
 package com.endava.neo4jworkshop.model.time;
 
-import com.endava.neo4jworkshop.model.GraphEntity;
+import com.endava.neo4jworkshop.model.GraphNode;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.annotation.Index;
@@ -11,11 +11,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Day extends GraphEntity {
+@NodeEntity
+public class Day extends GraphNode {
 
     @Index
     Long value;

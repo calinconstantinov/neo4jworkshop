@@ -3,13 +3,13 @@ package com.endava.neo4jworkshop.service;
 import com.endava.neo4jworkshop.model.time.Day;
 import com.endava.neo4jworkshop.model.time.Hour;
 import com.endava.neo4jworkshop.model.time.Month;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import com.endava.neo4jworkshop.model.time.Year;
 import com.endava.neo4jworkshop.repository.time.DayRepository;
 import com.endava.neo4jworkshop.repository.time.HourRepository;
 import com.endava.neo4jworkshop.repository.time.MonthRepository;
 import com.endava.neo4jworkshop.repository.time.YearRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
 

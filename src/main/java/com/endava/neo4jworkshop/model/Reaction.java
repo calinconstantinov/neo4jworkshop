@@ -7,11 +7,11 @@ import org.neo4j.ogm.annotation.Relationship;
 
 @Getter
 @Setter
-@NodeEntity
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Reaction extends GraphEntity {
+@NodeEntity
+public class Reaction extends GraphNode {
 
     Long timestamp;
 
