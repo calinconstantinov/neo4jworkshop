@@ -1,19 +1,22 @@
 package com.endava.neo4jworkshop.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.neo4j.ogm.session.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
 /**
- * Inspired from: https://markhneedham.com/blog/2014/04/19/neo4j-cypher-creating-a-time-tree-down-to-the-day/
+ * Original solution: https://markhneedham.com/blog/2014/04/19/neo4j-cypher-creating-a-time-tree-down-to-the-day/
  */
-@Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Service
 public class TimeSetupService {
 
-    private final Session session;
+    Session session;
 
     public void setupTime() {
         String timeNodesCreationQuery =

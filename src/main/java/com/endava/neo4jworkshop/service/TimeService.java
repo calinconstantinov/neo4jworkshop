@@ -8,13 +8,16 @@ import com.endava.neo4jworkshop.repository.time.DayRepository;
 import com.endava.neo4jworkshop.repository.time.HourRepository;
 import com.endava.neo4jworkshop.repository.time.MonthRepository;
 import com.endava.neo4jworkshop.repository.time.YearRepository;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
 
-@Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Service
 public class TimeService {
 
     private static final String HOUR_FORMAT = "%d%02d%02d%02d";
@@ -22,13 +25,13 @@ public class TimeService {
     private static final String MONTH_FORMAT = "%d%02d";
     private static final String YEAR_FORMAT = "%d";
 
-    private final YearRepository yearRepository;
+    YearRepository yearRepository;
 
-    private final MonthRepository monthRepository;
+    MonthRepository monthRepository;
 
-    private final DayRepository dayRepository;
+    DayRepository dayRepository;
 
-    private final HourRepository hourRepository;
+    HourRepository hourRepository;
 
     public Year find(int year) {
         return yearRepository.findByUuid(format(YEAR_FORMAT, year));

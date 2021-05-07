@@ -69,10 +69,13 @@ public class WorkshopController {
         calinAuthentication.setPassword("Passw0rd");
         authenticationRepository.save(calinAuthentication);
 
-        log.info("Found Authentication for User with name 'Calin': {}", authenticationRepository.findByUser_Name("Calin"));
-        log.info("User 'Calin' does not reflect Authentication assignment: {}", calin.getAuthentication());
+        log.info("Found Authentication for User with name 'Calin': {}",
+                authenticationRepository.findByUser_Name("Calin"));
+        log.info("User 'Calin' does not reflect Authentication assignment: {}",
+                calin.getAuthentication());
         calin = userRepository.findByName("Calin");
-        log.info("User 'Calin' now does reflect Authentication assignment: {}", calin.getAuthentication());
+        log.info("User 'Calin' now does reflect Authentication assignment: {}",
+                calin.getAuthentication());
 
         var mihai = new User();
         mihai.setName("Mihai");
