@@ -1,9 +1,8 @@
 package com.endava.neo4jworkshop.repository.time;
 
 import com.endava.neo4jworkshop.model.time.Month;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import com.endava.neo4jworkshop.repository.GraphNodeRepository;
 
-public interface MonthRepository extends Neo4jRepository<Month, Long> {
+public interface MonthRepository extends GraphNodeRepository<Month> {
 
-    Month findByUuid(String uuid);
 }

@@ -1,11 +1,10 @@
 package com.endava.neo4jworkshop.repository.time;
 
 import com.endava.neo4jworkshop.model.time.Year;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import com.endava.neo4jworkshop.repository.GraphNodeRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface YearRepository extends Neo4jRepository<Year, Long> {
+public interface YearRepository extends GraphNodeRepository<Year> {
 
-    Year findByUuid(String uuid);
 }

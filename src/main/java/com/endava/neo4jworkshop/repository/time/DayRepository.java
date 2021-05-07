@@ -1,11 +1,10 @@
 package com.endava.neo4jworkshop.repository.time;
 
 import com.endava.neo4jworkshop.model.time.Day;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import com.endava.neo4jworkshop.repository.GraphNodeRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DayRepository extends Neo4jRepository<Day, Long> {
+public interface DayRepository extends GraphNodeRepository<Day> {
 
-    Day findByUuid(String uuid);
 }

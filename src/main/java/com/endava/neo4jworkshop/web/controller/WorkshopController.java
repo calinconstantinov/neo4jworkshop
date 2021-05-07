@@ -4,6 +4,7 @@ import com.endava.neo4jworkshop.model.*;
 import com.endava.neo4jworkshop.model.relationship.Like;
 import com.endava.neo4jworkshop.model.time.Day;
 import com.endava.neo4jworkshop.repository.*;
+import com.endava.neo4jworkshop.repository.relationship.LikeRepository;
 import com.endava.neo4jworkshop.service.TimeService;
 import com.endava.neo4jworkshop.service.TimeSetupService;
 import lombok.AccessLevel;

@@ -1,15 +1,14 @@
 package com.endava.neo4jworkshop.repository;
 
 import com.endava.neo4jworkshop.model.Company;
-import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
-import org.springframework.stereotype.Repository;
 import com.endava.neo4jworkshop.queryresult.FriendsOfEmployeesCompany;
+import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CompanyRepository extends Neo4jRepository<Company, Long> {
+public interface CompanyRepository extends GraphNodeRepository<Company> {
 
     @Query("MATCH (c:Company)-[:EMPLOYED]->(u:User)-[:FRIENDS_WITH]-(u2:User)<-[:EMPLOYED]-(c2:Company) " +
             "WHERE c.uuid <> c2.uuid AND c.name = $0 " +
