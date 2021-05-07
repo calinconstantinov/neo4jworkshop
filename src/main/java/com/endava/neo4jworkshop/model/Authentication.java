@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.Relationship;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NodeEntity
-public class Credentials extends GraphNode {
+public class Authentication extends GraphNode {
 
     String email;
 
@@ -19,6 +19,6 @@ public class Credentials extends GraphNode {
     String password;
 
     @ToString.Exclude
-    @Relationship(type = "HAS_CREDENTIALS", direction = Relationship.INCOMING)
+    @Relationship(type = "HAS_AUTHENTICATION", direction = Relationship.INCOMING)
     User user;
 }

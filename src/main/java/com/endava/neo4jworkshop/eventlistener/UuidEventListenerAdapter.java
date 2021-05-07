@@ -19,8 +19,10 @@ public class UuidEventListenerAdapter extends EventListenerAdapter {
         }
 
         var entity = (GraphNode) eventObject;
-        if (StringUtils.isEmpty(entity.getUuid())) {
-            entity.setUuid(UUID.randomUUID().toString());
+        if (StringUtils.isNotEmpty(entity.getUuid())) {
+            return;
         }
+
+        entity.setUuid(UUID.randomUUID().toString());
     }
 }
