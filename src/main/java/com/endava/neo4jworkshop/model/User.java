@@ -30,7 +30,7 @@ public class User extends GraphNode {
 
     //not how it should be done
     @ToString.Exclude
-    @Relationship(type = "FRIENDS_WITH")
+    @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
     Set<User> friends = new LinkedHashSet<>();
 
     @Relationship(type = "LIKES_POST")
