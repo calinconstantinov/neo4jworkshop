@@ -259,5 +259,10 @@ ORDER BY friendshipPower DESC
 CALL db.index.fulltext.createNodeIndex("user_names",["User"],["name"]);
 
 1. _Term query example_  
-
+CALL db.index.fulltext.queryNodes("user_names", "Calin Mihai") YIELD node, score 
+RETURN node.name, score
+   
 1. _Fuzzy query example_  
+CALL db.index.fulltext.queryNodes("user_names", "clin~") YIELD node, score
+RETURN node.name, score
+   
