@@ -2,7 +2,6 @@ package com.endava.neo4jworkshop.web.controller;
 
 import com.endava.neo4jworkshop.model.*;
 import com.endava.neo4jworkshop.model.relationship.Like;
-import com.endava.neo4jworkshop.model.time.Day;
 import com.endava.neo4jworkshop.repository.*;
 import com.endava.neo4jworkshop.repository.relationship.LikeRepository;
 import com.endava.neo4jworkshop.service.TimeService;
@@ -317,33 +316,33 @@ public class WorkshopController {
                         .findByCommenter_Name("Mihai")
                         .size());
 
-        ReactionType loveReactionType = new ReactionType();
+        var loveReactionType = new ReactionType();
         loveReactionType.setName("LOVE");
         reactionTypeRepository.save(loveReactionType);
 
-        ReactionType hahaReactionType = new ReactionType();
+        var hahaReactionType = new ReactionType();
         hahaReactionType.setName("HAHA");
         reactionTypeRepository.save(hahaReactionType);
 
-        Reaction emilianLoveValentinaComment1CalinPost1 = new Reaction();
+        var emilianLoveValentinaComment1CalinPost1 = new Reaction();
         emilianLoveValentinaComment1CalinPost1.setReactionType(loveReactionType);
         emilianLoveValentinaComment1CalinPost1.setReactingUser(emilian);
         emilianLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
         reactionRepository.save(emilianLoveValentinaComment1CalinPost1);
 
-        Reaction calinHahaStefanComment1CalinPost2 = new Reaction();
+        var calinHahaStefanComment1CalinPost2 = new Reaction();
         calinHahaStefanComment1CalinPost2.setReactionType(hahaReactionType);
         calinHahaStefanComment1CalinPost2.setReactingUser(calin);
         calinHahaStefanComment1CalinPost2.setComment(stefanComment1CalinPost2);
         reactionRepository.save(calinHahaStefanComment1CalinPost2);
 
-        Reaction mihaelaLoveValentinaComment1CalinPost1 = new Reaction();
+        var mihaelaLoveValentinaComment1CalinPost1 = new Reaction();
         mihaelaLoveValentinaComment1CalinPost1.setReactionType(loveReactionType);
         mihaelaLoveValentinaComment1CalinPost1.setReactingUser(mihaela);
         mihaelaLoveValentinaComment1CalinPost1.setComment(valentinaComment1CalinPost1);
         reactionRepository.save(mihaelaLoveValentinaComment1CalinPost1);
 
-        Reaction razvanLoveCalinComment1CalinPost2 = new Reaction();
+        var razvanLoveCalinComment1CalinPost2 = new Reaction();
         razvanLoveCalinComment1CalinPost2.setReactionType(loveReactionType);
         razvanLoveCalinComment1CalinPost2.setReactingUser(razvan);
         razvanLoveCalinComment1CalinPost2.setComment(calinComment1CalinPost2);
@@ -359,17 +358,17 @@ public class WorkshopController {
                         .size());
 
         timeSetupService.setupTime();
-        Day day = timeService.find(2021, 5, 15);
+        var day = timeService.find(2021, 5, 15);
         log.info("Day {} has {} Hours", day.getUuid(), day.getHours().size());
 
-        Comment calinReplyVladucuComment1CalinPost2 = new Comment();
+        var calinReplyVladucuComment1CalinPost2 = new Comment();
         calinReplyVladucuComment1CalinPost2.setCommenter(calin);
         calinReplyVladucuComment1CalinPost2.setHour(timeService.find(2021, 5, 16, 9));
         calinReplyVladucuComment1CalinPost2.setContent("Thanks! <3");
         vladucuComment1CalinPost2.addReply(calinReplyVladucuComment1CalinPost2);
         commentRepository.save(vladucuComment1CalinPost2);
 
-        Comment emilianReplyStefanComment1CalinPost2 = new Comment();
+        var emilianReplyStefanComment1CalinPost2 = new Comment();
         emilianReplyStefanComment1CalinPost2.setCommenter(emilian);
         emilianReplyStefanComment1CalinPost2.setHour(timeService.find(2021, 5, 16, 10));
         emilianReplyStefanComment1CalinPost2.setContent("That would've sucked haha");
