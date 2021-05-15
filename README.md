@@ -65,8 +65,8 @@ MATCH (n:User)
 WHERE n.name='Calin'  
 RETURN n 
 
-1. _Matching credentials_  
-MATCH (n:User)-[:HAS_CREDENTIALS]-(c)  
+1. _Matching authentication_  
+MATCH (n:User)-[:HAS_AUTHENTICATION]-(c)  
 WHERE n.name='Calin'  
 RETURN n, c
 
@@ -84,7 +84,7 @@ MATCH (n:User)-[:FRIENDS_WITH]->(friend)
 WHERE ID(n) > ID(friend)  
 RETURN n, friend
    
-1. _Remove duplicate friendship relationships_
+1. _Remove duplicate friendship relationships_  
 MATCH (u1:User)-[friendship:FRIENDS_WITH]->(u2:User) 
 WHERE ID(u1) > ID(u2) 
 DELETE friendship
