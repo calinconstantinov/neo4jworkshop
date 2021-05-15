@@ -9,11 +9,11 @@ docker run -p 7474:7474 -p 7687:7687 --name neo4j-apoc -e NEO4J_AUTH=neo4j/admin
 
 **Database setup**
 1. _GraphML import_  
-CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/sample.graphml', {readLabels: true})
+CALL apoc.import.graphml('https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/master/src/main/resources/db/sample.graphml', {readLabels: true})
 
 1. _Cypher import (schema)_  
 Copy the one in: 
-https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/schema.cyp
+https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/master/src/main/resources/db/schema.cyp
 
 1. _Schema: Constraints_  
 CALL db.constraints
@@ -40,7 +40,7 @@ CALL apoc.schema.assert({},{})
 
 1. _Import GRASS file_  
 Drag and drop the one in:
-https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/develop/src/main/resources/db/style.grass
+https://raw.githubusercontent.com/calinconstantinov/neo4jworkshop/master/src/main/resources/db/style.grass
 1. _Reset GRASS_  
 :style reset
 
@@ -265,4 +265,3 @@ RETURN node.name, score
 1. _Fuzzy query example_  
 CALL db.index.fulltext.queryNodes("user_names", "clin~") YIELD node, score
 RETURN node.name, score
-   
